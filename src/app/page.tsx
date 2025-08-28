@@ -1,12 +1,15 @@
-'use client';
+
+'use client'
 
 import React, { Suspense, useEffect, useRef, useState } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Float, Environment, Html, useGLTF, Preload, PerspectiveCamera, Text as DreiText } from '@react-three/drei';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import Spline from '@splinetool/react-spline';
-import emailjs from 'emailjs-com';
+import dynamic from 'next/dynamic';
+import ContactForm from "@/components/page/ContactForm";
+
+const HeroScene = dynamic(() => import('@/components/page/HeroScene'), { ssr: false, loading: () => <div className="w-full h-full bg-black/20 animate-pulse rounded-3xl" /> });
+const QuasimodoScene = dynamic(() => import('@/components/page/QuasimodoScene'), { ssr: false, loading: () => <div className="w-full h-full bg-black/20 animate-pulse rounded-2xl" /> });
 
 // HOC: Section wrapper for spacing, id anchors, and entrance animations
 const withSection = (Component, id) => function Wrapped(props) {
@@ -23,79 +26,6 @@ const withSection = (Component, id) => function Wrapped(props) {
     </section>
   );
 };
-
-// 3D Model (GLTF).
-function PurpleHoodie(props){
-  const url = props.url || 'https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/hoodie/model.gltf';
-  const { scene } = useGLTF(url);
-  return (
-    <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.8}>
-      <primitive object={scene} scale={props.scale ?? 2.2} position={props.position ?? [0, -1.2, 0]} />
-    </Float>
-  );
-}
-useGLTF.preload('https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/hoodie/model.gltf');
-
-// Reusable 3D Scene component
-function HeroScene(){
-  return (
-    <Canvas className="rounded-3xl shadow-2xl" dpr={[1, 2]}>
-      <color attach="background" args={["#1a052d"]} />
-      <PerspectiveCamera makeDefault position={[0, 1.2, 4]} fov={50} />
-      <hemisphereLight intensity={0.5} groundColor={'#12021f'} />
-      <spotLight position={[2, 5, 3]} angle={0.6} penumbra={0.6} intensity={1.5} castShadow />
-      <pointLight position={[-3, 2, -2]} intensity={1} color={'#a855f7'} />
-
-      <Suspense fallback={<Html center><div className="animate-pulse text-sm">loading 3D…</div></Html>}>
-        <PurpleHoodie />
-        <DreiText position={[0, 1.6, 0]} fontSize={0.25} anchorX="center" anchorY="middle">
-          THISSDAX
-          <meshBasicMaterial color={'#c084fc'} />
-        </DreiText>
-        <Environment preset="night" />
-        <Preload all />
-      </Suspense>
-
-      <OrbitControls enablePan={false} minDistance={2} maxDistance={6} />
-    </Canvas>
-  );
-}
-
-// Email form (EmailJS)
-function ContactForm(){
-  const formRef = useRef(null);
-  const [sending, setSending] = useState(false);
-  const [done, setDone] = useState(false);
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (!formRef.current) return;
-    setSending(true);
-    emailjs.sendForm(
-      process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'your_service_id',
-      process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'your_template_id',
-      formRef.current,
-      process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'your_public_key'
-    ).then(()=>{
-      setDone(true);
-    }).catch(()=>{
-      alert('Email failed. Configure EmailJS keys and template.');
-    }).finally(()=> setSending(false));
-  };
-
-  return (
-    <form ref={formRef} onSubmit={onSubmit} className="grid gap-4">
-      <div className="grid sm:grid-cols-2 gap-4">
-        <input name="from_name" required placeholder="Your name" className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 outline-none focus:border-purple-400" />
-        <input name="reply_to" type="email" required placeholder="Your email" className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 outline-none focus:border-purple-400" />
-      </div>
-      <textarea name="message" rows={5} required placeholder="Write a birthday note for Thissdax…" className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 outline-none focus:border-purple-400" />
-      <button disabled={sending} className="rounded-2xl px-5 py-3 font-medium bg-gradient-to-r from-purple-600 to-fuchsia-500 hover:from-purple-500 hover:to-fuchsia-400 disabled:opacity-60">
-        {sending ? 'Sending…' : (done ? 'Sent ✓' : 'Send Message')}
-      </button>
-    </form>
-  );
-}
 
 // GSAP accent: shimmer on the main heading
 function useShimmer(ref){
@@ -163,29 +93,7 @@ function QuasimodoCard(){
   return (
     <div className="grid lg:grid-cols-2 gap-10 items-center">
       <div className="rounded-3xl p-6 bg-white/5 ring-1 ring-white/10 backdrop-blur">
-        <Canvas dpr={[1,2]} className="rounded-2xl h-[360px]">
-          <color attach="background" args={["#130322"]} />
-          <PerspectiveCamera makeDefault position={[0,0,5]} />
-          <ambientLight intensity={0.5} />
-          <spotLight position={[6,6,6]} intensity={1.4} />
-          <Suspense fallback={<Html center>loading…</Html>}>
-            <gridHelper args={[20, 20, '#4c1d95', '#1f0a3a']} />
-            <mesh position={[-2, -1, 0]}>
-              <boxGeometry args={[0.3, 1.2, 0.3]} />
-              <meshStandardMaterial color={'#8b5cf6'} />
-            </mesh>
-            <mesh position={[0, 0.2, 0]}>
-              <boxGeometry args={[0.3, 2.2, 0.3]} />
-              <meshStandardMaterial color={'#a78bfa'} />
-            </mesh>
-            <mesh position={[2, -0.6, 0]}>
-              <boxGeometry args={[0.3, 1.0, 0.3]} />
-              <meshStandardMaterial color={'#c4b5fd'} />
-            </mesh>
-            <Preload all />
-          </Suspense>
-          <OrbitControls enablePan={false} />
-        </Canvas>
+        <QuasimodoScene />
       </div>
       <div className="space-y-4">
         <h2 className="text-3xl sm:text-4xl font-bold">Quasimodo Pattern • Tribute</h2>
