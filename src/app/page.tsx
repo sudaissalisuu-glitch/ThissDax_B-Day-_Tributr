@@ -4,10 +4,10 @@
 import React, { Suspense, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
-import Spline from '@splinetool/react-spline';
 import dynamic from 'next/dynamic';
 import ContactForm from "@/components/page/ContactForm";
 
+const Spline = dynamic(() => import('@splinetool/react-spline'), { ssr: false });
 const HeroScene = dynamic(() => import('@/components/page/HeroScene'), { ssr: false, loading: () => <div className="w-full h-full bg-black/20 animate-pulse rounded-3xl" /> });
 const QuasimodoScene = dynamic(() => import('@/components/page/QuasimodoScene'), { ssr: false, loading: () => <div className="w-full h-full bg-black/20 animate-pulse rounded-2xl" /> });
 
@@ -78,7 +78,7 @@ function SplineShowcase(){
         <h2 className="text-3xl sm:text-4xl font-bold">Purple Space • Interactive Spline</h2>
         <p className="text-white/70">Crafted with <span className="text-purple-300">Spline</span> and embedded directly. Mix it with Three.js sections for a seamless 3D experience.</p>
         <ul className="text-white/70 list-disc pl-6 space-y-1">
-          <li>Smooth performance with <code>Suspense</code> + <code>Preload</code>.</li>
+          <li>Smooth performance with <code>Suspense</code> + <code>dynamic import</code>.</li>
           <li>Orbit, float effects, HDR environment.</li>
           <li>Fully responsive and touch-friendly.</li>
         </ul>
@@ -113,7 +113,7 @@ function Contact(){
     <div id="message" className="grid lg:grid-cols-2 gap-10 items-start">
       <div className="space-y-3">
         <h2 className="text-3xl sm:text-4xl font-bold">Send a Birthday Message</h2>
-        <p className="text-white/70">Your email goes straight to Thissdax. Configure EmailJS keys to enable sending.</p>
+        <p className="text-white/70">Your email goes straight to Thissdax. This is a demo; email sending is not live.</p>
         <ContactForm />
       </div>
       <div className="rounded-3xl p-6 bg-gradient-to-br from-purple-900/40 to-fuchsia-900/30 ring-1 ring-white/10">

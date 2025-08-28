@@ -1,3 +1,4 @@
+
 'use server';
 
 import { z } from 'zod';
@@ -11,7 +12,7 @@ const schema = z.object({
 export async function sendBirthdayMessage(
   prevState: {
     message: string;
-    errors?: string;
+    errors?: Record<string, string[] | undefined> | string;
     success: boolean;
   },
   formData: FormData
@@ -25,7 +26,7 @@ export async function sendBirthdayMessage(
   if (!validatedFields.success) {
     return {
       message: 'Validation failed.',
-      errors: validatedFields.error.flatten().fieldErrors.message?.join(', '),
+      errors: validatedFields.error.flatten().fieldErrors,
       success: false,
     };
   }

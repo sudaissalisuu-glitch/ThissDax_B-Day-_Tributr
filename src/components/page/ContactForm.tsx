@@ -1,12 +1,14 @@
+
 "use client";
 
 import { sendBirthdayMessage } from "@/app/actions";
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 
 export default function ContactForm() {
   const { toast } = useToast();
+  const formRef = useRef<HTMLFormElement>(null);
   const [state, formAction, isPending] = useActionState(sendBirthdayMessage, {
     message: "",
     errors: undefined,
@@ -19,17 +21,19 @@ export default function ContactForm() {
         title: "Message Sent!",
         description: "Your birthday message has been sent to Thissdax.",
       });
+      formRef.current?.reset();
     } else if (state.errors) {
+      const errorMessages = Object.values(state.errors).flat().join(', ');
       toast({
         variant: "destructive",
         title: "Error",
-        description: state.errors,
+        description: errorMessages || 'An unexpected error occurred.',
       });
     }
   }, [state, toast]);
 
   return (
-    <form action={formAction} className="grid gap-4">
+    <form ref={formRef} action={formAction} className="grid gap-4">
       <div className="grid sm:grid-cols-2 gap-4">
         <input
           name="from_name"
