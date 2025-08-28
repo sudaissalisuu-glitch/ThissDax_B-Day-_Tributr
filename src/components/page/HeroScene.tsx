@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Suspense } from "react";
@@ -18,6 +19,7 @@ function PurpleHoodie(props: { url?: string; scale?: number; position?: [number,
     props.url ||
     "https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/hoodie/model.gltf";
   const { scene } = useGLTF(url);
+  useGLTF.preload(url);
   return (
     <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.8}>
       <primitive
@@ -28,9 +30,7 @@ function PurpleHoodie(props: { url?: string; scale?: number; position?: [number,
     </Float>
   );
 }
-useGLTF.preload(
-  "https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/hoodie/model.gltf"
-);
+
 
 export default function HeroScene() {
   return (
