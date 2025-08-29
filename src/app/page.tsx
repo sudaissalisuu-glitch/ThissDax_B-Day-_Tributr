@@ -23,6 +23,7 @@ import {
 
 const QuasimodoScene = dynamic(() => import('@/components/page/QuasimodoScene'), { ssr: false });
 const TributeVideoPlayer = dynamic(() => import('@/components/page/TributeVideoPlayer'), { ssr: false });
+const FireworksEffect = dynamic(() => import('@/components/page/FireworksEffect'), { ssr: false });
 
 
 // HOC Replacement: Section with viewport-triggered animation
@@ -331,6 +332,7 @@ export default function ThissdaxBirthdayApp() {
 
   return (
     <div className="min-h-screen">
+      <FireworksEffect />
       <header className="sticky top-0 z-40 backdrop-blur bg-black/20 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px:6 lg:px:8 h-16 flex items-center justify-between">
           <a href="#home" className="font-black tracking-wide text-xl"><span className="text-purple-400">Thiss</span>•<span className="text-fuchsia-400">Dax</span> 🎂</a>
