@@ -10,7 +10,7 @@ import dynamic from 'next/dynamic';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { sendBirthdayMessage } from '@/app/actions';
-import { Award, Heart, Twitter } from 'lucide-react';
+import { Heart, Twitter } from 'lucide-react';
 
 const HeroScene = dynamic(() => import('@/components/page/HeroScene'), { ssr: false });
 const QuasimodoScene = dynamic(() => import('@/components/page/QuasimodoScene'), { ssr: false });
@@ -193,7 +193,7 @@ function Contact(){
         <h3 className="font-semibold text-lg mb-2">What’s inside this gift</h3>
         <ul className="text-white/70 list-disc pl-6 space-y-1">
           <li>React + Tailwind dark purple theme</li>
-          <li>Three.js scenes with lights, camera, and floating 3D model</li>
+          <li>Spline.design 3D scene embed</li>
           <li>Framer Motion entrances & GSAP shimmer</li>
           <li>Responsive design with Suspense & Preload</li>
           <li>HOC-based section structure for scalability</li>
@@ -267,5 +267,3 @@ export default function ThissdaxBirthdayApp() {
     </div>
   );
 }
-
-    
