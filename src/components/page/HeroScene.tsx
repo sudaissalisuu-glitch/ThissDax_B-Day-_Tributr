@@ -8,19 +8,18 @@ import {
   Float,
   Environment,
   Html,
-  useGLTF,
   Preload,
   PerspectiveCamera,
   Text as DreiText,
+  Torus,
 } from '@react-three/drei';
 
-function PurpleHoodie(props: { scale?: number; position?: [number, number, number] }) {
-  const url = "https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/quasimoto/model.gltf";
-  const { scene } = useGLTF(url);
-  useGLTF.preload(url);
+function Placeholder3D(props: { scale?: number; position?: [number, number, number] }) {
   return (
     <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.8}>
-      <primitive object={scene} scale={props.scale ?? 0.04} position={props.position ?? [0, -1.2, 0]} />
+      <Torus args={[0.8, 0.3, 16, 100]} position={props.position ?? [0, 0, 0]}>
+        <meshStandardMaterial color={"#a855f7"} roughness={0.2} metalness={0.8} />
+      </Torus>
     </Float>
   );
 }
@@ -34,7 +33,7 @@ export default function HeroScene() {
       <spotLight position={[2, 5, 3]} angle={0.6} penumbra={0.6} intensity={1.5} castShadow />
       <pointLight position={[-3, 2, -2]} intensity={1} color={"#a855f7"} />
       <Suspense fallback={<Html center><div className="animate-pulse text-sm">loading 3D…</div></Html>}>
-        <PurpleHoodie />
+        <Placeholder3D />
         <DreiText position={[0, 1.6, 0]} fontSize={0.25} anchorX="center" anchorY="middle">
           THISSDAX
           <meshBasicMaterial color={"#c084fc"} />
