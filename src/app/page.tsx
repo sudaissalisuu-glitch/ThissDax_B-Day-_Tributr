@@ -312,7 +312,7 @@ function AudioPlayer() {
   return (
     <div>
        <audio ref={audioRef} loop muted playsInline>
-          <source src="https://firebasestorage.googleapis.com/v0/b/genkit-llm-77838.appspot.com/o/lofi-study-112191.mp3?alt=media&token=e33f06c6-4357-4b77-b952-b9b5c33842a5" type="audio/mpeg" />
+          <source src="https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/New%20Divide%20(Official%20Music%20Video)%20%5B4K%20Upgrade%5D%20-%20Linkin%20Park.mp3" type="audio/mpeg" />
           Your browser does not support the audio element.
         </audio>
         <button 
