@@ -26,6 +26,7 @@ import { ThissdaxLogo } from '@/components/page/ThissdaxLogo';
 const QuasimodoScene = dynamic(() => import('@/components/page/QuasimodoScene'), { ssr: false });
 const TributeVideoPlayer = dynamic(() => import('@/components/page/TributeVideoPlayer'), { ssr: false });
 const FireworksEffect = dynamic(() => import('@/components/page/FireworksEffect'), { ssr: false });
+const NowPlayingNotification = dynamic(() => import('@/components/page/NowPlayingNotification'), { ssr: false });
 
 
 // HOC Replacement: Section with viewport-triggered animation
@@ -287,7 +288,7 @@ function Contact(){
   );
 }
 
-function AudioPlayer() {
+function AudioPlayer({ onReady }) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isMuted, setIsMuted] = useState(true);
 
@@ -303,23 +304,26 @@ function AudioPlayer() {
     const playAudio = async () => {
       if (audioRef.current) {
         try {
-          // We try to play unmuted. Browsers might block this!
           audioRef.current.muted = false;
           await audioRef.current.play();
           setIsMuted(false);
+          onReady();
         } catch (error) {
           console.log("Autoplay with sound was prevented by the browser. Starting muted.", error);
-          // If it fails, we play it muted and the user can unmute.
           audioRef.current.muted = true;
-          audioRef.current.play();
-          setIsMuted(true);
+           try {
+            await audioRef.current.play();
+            setIsMuted(true);
+            onReady();
+          } catch(e) {
+            console.log("Autoplay is completely blocked.", e);
+          }
         }
       }
     };
-    // Let's try to play after a short delay
     const timeoutId = setTimeout(playAudio, 100);
     return () => clearTimeout(timeoutId);
-  }, []);
+  }, [onReady]);
 
   return (
     <div>
@@ -342,9 +346,9 @@ function AudioPlayer() {
 // Main App
 export default function ThissdaxBirthdayApp() {
   const [year, setYear] = useState(new Date().getFullYear());
+  const [showMusicNotif, setShowMusicNotif] = useState(false);
 
   useEffect(() => {
-    // This check is to prevent hydration errors
     setYear(new Date().getFullYear());
   }, []);
   
@@ -374,8 +378,11 @@ export default function ThissdaxBirthdayApp() {
 
   return (
     <div className="min-h-screen">
+      <AnimatePresence>
+        {showMusicNotif && <NowPlayingNotification />}
+      </AnimatePresence>
       <FireworksEffect />
-      <AudioPlayer />
+      <AudioPlayer onReady={() => setShowMusicNotif(true)} />
       <header className="sticky top-0 z-40 backdrop-blur bg-black/20 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px:6 lg:px:8 h-16 flex items-center justify-between">
           <a href="#home" className="flex items-center gap-2 font-black tracking-wide text-xl">
@@ -415,5 +422,3 @@ export default function ThissdaxBirthdayApp() {
     </div>
   );
 }
-
-    
