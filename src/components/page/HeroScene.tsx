@@ -14,8 +14,8 @@ import {
   Text as DreiText,
 } from '@react-three/drei';
 
-function PurpleHoodie(props: { url?: string; scale?: number; position?: [number, number, number] }) {
-  const url = props.url || "https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/quasimoto/model.gltf";
+function PurpleHoodie(props: { scale?: number; position?: [number, number, number] }) {
+  const url = "https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/quasimoto/model.gltf";
   const { scene } = useGLTF(url);
   useGLTF.preload(url);
   return (
