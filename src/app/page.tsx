@@ -314,7 +314,7 @@ export default function ThissdaxBirthdayApp() {
     setYear(new Date().getFullYear());
   }, []);
   
-  const tweetText = "Celebrating my mentor Thissdax's birthday with this awesome 3D tribute! Join in! #Forex #ThissdaxBirthday";
+  const tweetText = "Celebrating my mentor @thissdax's birthday with this awesome 3D tribute! Join in! #Forex #ThissdaxBirthday";
   const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
 
 
