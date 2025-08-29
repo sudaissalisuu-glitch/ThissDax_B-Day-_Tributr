@@ -15,12 +15,12 @@ import {
 } from '@react-three/drei';
 
 function PurpleHoodie(props: { url?: string; scale?: number; position?: [number, number, number] }) {
-  const url = props.url || "https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/hoodie/model.gltf";
+  const url = props.url || "https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/quasimoto/model.gltf";
   const { scene } = useGLTF(url);
   useGLTF.preload(url);
   return (
     <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.8}>
-      <primitive object={scene} scale={props.scale ?? 2.2} position={props.position ?? [0, -1.2, 0]} />
+      <primitive object={scene} scale={props.scale ?? 0.04} position={props.position ?? [0, -1.2, 0]} />
     </Float>
   );
 }
