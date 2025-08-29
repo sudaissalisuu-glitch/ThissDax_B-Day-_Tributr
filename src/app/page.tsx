@@ -1,17 +1,21 @@
 
 'use client'
 
-import React, { Suspense, useEffect, useRef, useState } from 'react';
+import React,
+{ Suspense, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import dynamic from 'next/dynamic';
-import ContactForm from "@/components/page/ContactForm";
+import { useActionState } from 'react';
+import { useToast } from '@/hooks/use-toast';
+import { Button } from '@/components/ui/button';
+import { sendBirthdayMessage } from '@/app/actions';
 
+const HeroScene = dynamic(() => import('@/components/page/HeroScene'), { ssr: false });
+const QuasimodoScene = dynamic(() => import('@/components/page/QuasimodoScene'), { ssr: false });
 const Spline = dynamic(() => import('@splinetool/react-spline'), { ssr: false });
-const HeroScene = dynamic(() => import('@/components/page/HeroScene'), { ssr: false, loading: () => <div className="w-full h-full bg-black/20 animate-pulse rounded-3xl" /> });
-const QuasimodoScene = dynamic(() => import('@/components/page/QuasimodoScene'), { ssr: false, loading: () => <div className="w-full h-full bg-black/20 animate-pulse rounded-2xl" /> });
 
-// HOC: Section wrapper for spacing, id anchors, and entrance animations
+// HOC: Section wrapper
 const withSection = (Component, id) => function Wrapped(props) {
   return (
     <section id={id} className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -26,6 +30,48 @@ const withSection = (Component, id) => function Wrapped(props) {
     </section>
   );
 };
+
+
+// Contact Form Component
+function ContactForm() {
+  const { toast } = useToast();
+  const formRef = useRef<HTMLFormElement>(null);
+  const [state, formAction, isPending] = useActionState(sendBirthdayMessage, {
+    message: "",
+    errors: undefined,
+    success: false,
+  });
+
+  useEffect(() => {
+    if (state.success) {
+      toast({
+        title: "Message Sent!",
+        description: "Your birthday message has been sent to Thissdax.",
+      });
+      formRef.current?.reset();
+    } else if (state.errors) {
+      const errorMessages = Object.values(state.errors).flat().join(', ');
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: errorMessages || 'An unexpected error occurred.',
+      });
+    }
+  }, [state, toast]);
+
+  return (
+    <form ref={formRef} action={formAction} className="grid gap-4">
+      <div className="grid sm:grid-cols-2 gap-4">
+        <input name="from_name" required placeholder="Your name" className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 outline-none focus:border-purple-400" />
+        <input name="reply_to" type="email" required placeholder="Your email" className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 outline-none focus:border-purple-400" />
+      </div>
+      <textarea name="message" rows={5} required placeholder="Write a birthday note for Thissdax…" className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 outline-none focus:border-purple-400" />
+      <Button type="submit" disabled={isPending} className="rounded-2xl px-5 py-3 font-medium bg-gradient-to-r from-purple-600 to-fuchsia-500 hover:from-purple-500 hover:to-fuchsia-400 disabled:opacity-60">
+        {isPending ? "Sending…" : state.success ? "Sent ✓" : "Send Message"}
+      </Button>
+    </form>
+  );
+}
 
 // GSAP accent: shimmer on the main heading
 function useShimmer(ref){
@@ -58,7 +104,9 @@ function Hero(){
         </div>
       </div>
       <div id="scene" className="h-[420px]">
-        <HeroScene />
+        <Suspense fallback={<div className="w-full h-full bg-black/20 animate-pulse rounded-3xl" />}>
+            <HeroScene />
+        </Suspense>
       </div>
     </div>
   );
@@ -93,7 +141,9 @@ function QuasimodoCard(){
   return (
     <div className="grid lg:grid-cols-2 gap-10 items-center">
       <div className="rounded-3xl p-6 bg-white/5 ring-1 ring-white/10 backdrop-blur">
-        <QuasimodoScene />
+        <Suspense fallback={<div className="w-full h-full bg-black/20 animate-pulse rounded-2xl" />}>
+            <QuasimodoScene />
+        </Suspense>
       </div>
       <div className="space-y-4">
         <h2 className="text-3xl sm:text-4xl font-bold">Quasimodo Pattern • Tribute</h2>
@@ -137,6 +187,7 @@ export default function ThissdaxBirthdayApp() {
   const [year, setYear] = useState(new Date().getFullYear());
 
   useEffect(() => {
+    // This check is to prevent hydration errors
     setYear(new Date().getFullYear());
   }, []);
 
