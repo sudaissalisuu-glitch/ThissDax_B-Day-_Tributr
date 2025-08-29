@@ -115,7 +115,9 @@ function Hero(){
         </div>
       </div>
       <div id="scene" className="h-[420px]">
-        <div className="w-full h-full bg-black/20 rounded-3xl" />
+        <Suspense fallback={<div className="w-full h-full bg-black/20 animate-pulse rounded-2xl" />}>
+            <QuasimodoScene />
+        </Suspense>
       </div>
     </div>
   );
@@ -127,7 +129,7 @@ const HeroSection = withSection(Hero, 'home');
 function QuasimodoCard(){
   return (
     <div className="grid lg:grid-cols-2 gap-10 items-center">
-      <div className="rounded-3xl p-6 bg-white/5 ring-1 ring-white/10 backdrop-blur">
+      <div className="rounded-3xl p-6 bg-white/5 ring-1 ring-white/10 backdrop-blur h-[420px]">
         <Suspense fallback={<div className="w-full h-full bg-black/20 animate-pulse rounded-2xl" />}>
             <QuasimodoScene />
         </Suspense>
@@ -161,8 +163,8 @@ function MenteeEngagement() {
       <h2 className="text-3xl sm:text-4xl font-bold">Are you a Mentee?</h2>
       <p className="text-white/70 max-w-2xl mx-auto">Show some love and mark your presence! Click the heart to let Thissdax know you stopped by.</p>
       <div className="flex justify-center">
-        <button 
-          onClick={handleClick} 
+        <button
+          onClick={handleClick}
           className="group flex items-center gap-3 rounded-full pl-5 pr-6 py-3 font-medium bg-gradient-to-r from-purple-600/50 to-fuchsia-500/50 hover:from-purple-500/60 hover:to-fuchsia-400/60 ring-1 ring-purple-400/30 transition-all transform hover:scale-105 disabled:opacity-80"
           disabled={isLiked}
         >
@@ -190,7 +192,7 @@ function Contact(){
         <h3 className="font-semibold text-lg mb-2">What’s inside this gift</h3>
         <ul className="text-white/70 list-disc pl-6 space-y-1">
           <li>React + Tailwind dark purple theme</li>
-          <li>Spline.design 3D scene embed</li>
+          <li>Custom GLB 3D model embed</li>
           <li>Framer Motion entrances & GSAP shimmer</li>
           <li>Responsive design with Suspense & Preload</li>
           <li>HOC-based section structure for scalability</li>
