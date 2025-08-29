@@ -13,7 +13,6 @@ import { sendBirthdayMessage } from '@/app/actions';
 
 const HeroScene = dynamic(() => import('@/components/page/HeroScene'), { ssr: false });
 const QuasimodoScene = dynamic(() => import('@/components/page/QuasimodoScene'), { ssr: false });
-const Spline = dynamic(() => import('@splinetool/react-spline'), { ssr: false });
 
 
 // HOC: Section wrapper
@@ -59,7 +58,7 @@ function ContactForm() {
         description: "Your birthday message has been sent to Thissdax.",
       });
       formRef.current?.reset();
-      setTimeout(() => setIsSuccess(false), 2000); 
+      setTimeout(() => setIsSuccess(false), 2000);
     } else {
       const errorMessages = typeof result.errors === 'string' ? result.errors : result.errors ? Object.values(result.errors).flat().join(', ') : 'An unexpected error occurred.';
       toast({
@@ -125,28 +124,6 @@ function Hero(){
 }
 const HeroSection = withSection(Hero, 'home');
 
-// Spline embed section
-function SplineShowcase(){
-  return (
-    <div className="grid lg:grid-cols-2 gap-10 items-center">
-      <div className="aspect-video w-full rounded-3xl overflow-hidden ring-1 ring-white/10">
-        <Suspense fallback={<div className="w-full h-full bg-black/20 animate-pulse" />}>
-          <Spline scene="https://prod.spline.design/3sBKv7-Xj1g8ePj7/scene.splinecode" />
-        </Suspense>
-      </div>
-      <div className="space-y-4">
-        <h2 className="text-3xl sm:text-4xl font-bold">Purple Space • Interactive Spline</h2>
-        <p className="text-white/70">Crafted with <span className="text-purple-300">Spline</span> and embedded directly. Mix it with Three.js sections for a seamless 3D experience.</p>
-        <ul className="text-white/70 list-disc pl-6 space-y-1">
-          <li>Smooth performance with <code>Suspense</code> + <code>dynamic import</code>.</li>
-          <li>Orbit, float effects, HDR environment.</li>
-          <li>Fully responsive and touch-friendly.</li>
-        </ul>
-      </div>
-    </div>
-  );
-}
-const SplineSection = withSection(SplineShowcase, 'spline');
 
 // Quasimodo (QM) strategy visual cue
 function QuasimodoCard(){
@@ -184,7 +161,6 @@ function Contact(){
           <li>React + Tailwind dark purple theme</li>
           <li>Three.js scenes with lights, camera, and floating 3D model</li>
           <li>Framer Motion entrances & GSAP shimmer</li>
-          <li>Spline interactive canvas</li>
           <li>Responsive design with Suspense & Preload</li>
           <li>HOC-based section structure for scalability</li>
         </ul>
@@ -209,7 +185,6 @@ export default function ThissdaxBirthdayApp() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <a href="#home" className="font-black tracking-wide text-xl"><span className="text-purple-400">Thiss</span>•<span className="text-fuchsia-400">Dax</span> 🎂</a>
           <nav className="hidden md:flex items-center gap-6 text-white/80">
-            <a href="#spline" className="hover:text-white">Spline</a>
             <a href="#qm" className="hover:text-white">Quasimodo</a>
             <a href="#contact" className="hover:text-white">Message</a>
           </nav>
@@ -219,7 +194,6 @@ export default function ThissdaxBirthdayApp() {
 
       <main>
         <HeroSection />
-        <SplineSection />
         <QuasimodoSection />
         <ContactSection />
       </main>
