@@ -340,20 +340,7 @@ export default function ThissdaxBirthdayApp() {
   const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
 
   const XIcon = (props) => (
-    <svg 
-        xmlns="http://www.w3.org/2000/svg" 
-        width="24" 
-        height="24" 
-        viewBox="0 0 24 24" 
-        fill="none" 
-        stroke="currentColor" 
-        strokeWidth="2" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"
-        {...props}
-    >
-        <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
-    </svg>
+    <span {...props}>𝕏</span>
   );
 
   const TelegramIcon = (props) => (
@@ -414,3 +401,5 @@ export default function ThissdaxBirthdayApp() {
     </div>
   );
 }
+
+    
