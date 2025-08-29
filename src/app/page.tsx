@@ -12,11 +12,19 @@ import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { sendBirthdayMessage } from '@/app/actions';
 import { Heart, Twitter, PlayCircle } from 'lucide-react';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+
 
 const QuasimodoScene = dynamic(() => import('@/components/page/QuasimodoScene'), { ssr: false });
 
 
-// HOC: Section wrapper
+// HOC: Section wrapper with Framer Motion animation
 const withSection = (Component, id) => function Wrapped(props) {
   return (
     <section id={id} className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px:8 py-16">
@@ -128,21 +136,36 @@ const HeroSection = withSection(Hero, 'home');
 
 // Quasimodo (QM) strategy visual cue
 function QuasimodoCard(){
+  const chartImages = [
+    "https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/AUDJPY_2025-07-31_08-38-09.png",
+    "https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/GBPJPY_2025-08-01_14-13-14.png"
+  ];
+
   return (
     <div className="grid lg:grid-cols-2 gap-10 items-center">
-        <div className="rounded-3xl p-6 bg-white/5 ring-1 ring-white/10 backdrop-blur aspect-video overflow-hidden">
-            <Image
-            src="https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/AUDJPY_2025-07-31_08-38-09.png"
-            alt="Forex Chart"
-            width={1200}
-            height={675}
-            className="rounded-xl w-full h-full object-cover"
-            data-ai-hint="forex chart"
-            />
-      </div>
+        <Carousel className="w-full">
+            <CarouselContent>
+            {chartImages.map((src, index) => (
+                <CarouselItem key={index}>
+                    <div className="rounded-3xl p-6 bg-white/5 ring-1 ring-white/10 backdrop-blur aspect-video overflow-hidden">
+                        <Image
+                            src={src}
+                            alt={`Forex Chart ${index + 1}`}
+                            width={1200}
+                            height={675}
+                            className="rounded-xl w-full h-full object-cover"
+                            data-ai-hint="forex chart"
+                        />
+                    </div>
+                </CarouselItem>
+            ))}
+            </CarouselContent>
+            <CarouselPrevious className="left-2" />
+            <CarouselNext className="right-2" />
+        </Carousel>
       <div className="space-y-4">
-        <h2 className="text-3xl sm:text-4xl font-bold">Quasimodo Pattern • Tribute</h2>
-        <p className="text-white/70">A symbolic nod to the QM idea (HH/HL then BOS to form LH/LL). This is just an artistic visualization to honor your style — not trading advice.</p>
+        <h2 className="text-3xl sm:text-4xl font-bold">Chart Studies & Setups</h2>
+        <p className="text-white/70">A glimpse into the chart analysis and trading setups, inspired by Thissdax's methodical approach to the markets. These are for illustrative purposes only.</p>
         <div className="flex gap-3">
           <a href="#message" className="rounded-2xl px-5 py-3 font-medium bg-purple-600/80 hover:bg-purple-500/90">Say Happy Birthday</a>
         </div>
@@ -264,7 +287,7 @@ export default function ThissdaxBirthdayApp() {
         <div className="max-w-7xl mx-auto px-4 sm:px:6 lg:px:8 h-16 flex items-center justify-between">
           <a href="#home" className="font-black tracking-wide text-xl"><span className="text-purple-400">Thiss</span>•<span className="text-fuchsia-400">Dax</span> 🎂</a>
           <nav className="hidden md:flex items-center gap-6 text-white/80">
-            <a href="#qm" className="hover:text-white">Quasimodo</a>
+            <a href="#qm" className="hover:text-white">Charts</a>
             <a href="#video" className="hover:text-white">Tribute</a>
             <a href="#mentees" className="hover:text-white">Mentees</a>
             <a href="#contact" className="hover:text-white">Message</a>
@@ -297,3 +320,5 @@ export default function ThissdaxBirthdayApp() {
     </div>
   );
 }
+
+    
