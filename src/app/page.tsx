@@ -50,7 +50,7 @@ function ContactForm() {
       });
       formRef.current?.reset();
     } else if (state.errors) {
-      const errorMessages = Object.values(state.errors).flat().join(', ');
+      const errorMessages = typeof state.errors === 'string' ? state.errors : Object.values(state.errors).flat().join(', ');
       toast({
         variant: "destructive",
         title: "Error",
