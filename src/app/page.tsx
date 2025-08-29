@@ -11,7 +11,7 @@ import Image from 'next/image';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { sendBirthdayMessage } from '@/app/actions';
-import { Heart, Twitter, PlayCircle } from 'lucide-react';
+import { Heart, Twitter, PlayCircle, Code, Palette, Wind, Bot, Volume2, VolumeX } from 'lucide-react';
 import {
   Carousel,
   CarouselContent,
@@ -104,7 +104,7 @@ function useShimmer(ref){
     if(!ref.current) return;
     const el = ref.current;
     const ctx = gsap.context(()=>{
-      gsap.fromTo(el, { backgroundPositionX: '0%' }, { backgroundPositionX: '200%', duration: 1.8, repeat: -1, ease: 'linear' });
+      gsap.fromTo(el, { backgroundPositionX: '0%' }, { backgroundPositionX: '200%', duration: 1.5, repeat: -1, ease: 'linear' });
     });
     return () => ctx.revert();
   },[ref]);
@@ -120,7 +120,7 @@ function Hero(){
       <div className="space-y-6">
         <div className="inline-block rounded-full border border-purple-500/30 px-3 py-1 text-xs tracking-widest uppercase text-purple-300">Birthday Drop • Monday</div>
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight">
-          <span ref={shimmerRef} className="bg-[linear-gradient(110deg,#a855f7,45%,#ffffff,55%,#a855f7)] bg-clip-text text-transparent bg-[length:200%_100%]">When focus hits, markets listen.</span>
+          <span ref={shimmerRef} className="bg-[linear-gradient(110deg,rgba(168,85,247,1)_35%,rgba(255,255,255,1)_50%,rgba(168,85,247,1)_65%)] bg-clip-text text-transparent bg-[length:200%_100%]">When focus hits, markets listen.</span>
         </h1>
         <p className="text-white/70 max-w-prose">Dedicated to <span className="text-purple-300 font-semibold">Thissdax</span> — FX mentor, purple vibes ambassador, and Quasimodo strategy wizard. Enjoy this little 3D tribute. 🎂</p>
         <div className="flex gap-3 flex-wrap">
@@ -147,7 +147,9 @@ function QuasimodoCard(){
 
   return (
     <div className="grid lg:grid-cols-2 gap-10 items-center">
-        <Carousel className="w-full">
+        <Carousel className="w-full" opts={{ loop: true }} plugins={[
+        // Autoplay({ delay: 3000 })
+      ]}>
             <CarouselContent>
             {chartImages.map((src, index) => (
                 <CarouselItem key={index}>
@@ -203,80 +205,41 @@ function VideoTribute() {
   );
 }
 
-
-const floatingHeartVariants = {
-  initial: { y: 0, opacity: 1 },
-  animate: (i) => ({
-    y: -100,
-    opacity: 0,
-    transition: {
-      delay: i * 0.1,
-      duration: 1,
-      ease: "easeOut",
-    },
-  }),
-};
-
-// Mentee Engagement Section
-function MenteeEngagement() {
-  const [isLiked, setIsLiked] = useState(false);
-  const [count, setCount] = useState(42);
-  const [floatingHearts, setFloatingHearts] = useState([]);
-
-  const handleClick = () => {
-    if (!isLiked) {
-      setIsLiked(true);
-      setCount(count + 1);
-      const newHearts = Array.from({ length: 5 }).map((_, i) => ({ id: Date.now() + i, i }));
-      setFloatingHearts(newHearts);
-    }
-  };
+// Mentee Wall Component
+function MenteeWall() {
+  const mentees = [
+    { name: 'Dreadshades', avatar: 'https://picsum.photos/seed/dread/200' },
+    { name: 'Sarah', avatar: 'https://picsum.photos/seed/sarah/200' },
+    { name: 'Mike', avatar: 'https://picsum.photos/seed/mike/200' },
+    { name: 'Emily', avatar: 'https://picsum.photos/seed/emily/200' },
+    { name: 'Chris', avatar: 'https://picsum.photos/seed/chris/200' },
+    { name: 'Jessica', avatar: 'https://picsum.photos/seed/jessica/200' },
+    { name: 'David', avatar: 'https://picsum.photos/seed/david/200' },
+    { name: 'Linda', avatar: 'https://picsum.photos/seed/linda/200' },
+  ];
 
   return (
-    <div id="mentees" className="text-center space-y-4 relative">
-      <h2 className="text-3xl sm:text-4xl font-bold">Are you a Mentee?</h2>
-      <p className="text-white/70 max-w-2xl mx-auto">Show some love and mark your presence! Click the heart to let Thissdax know you stopped by.</p>
-      
-      <div className="flex justify-center relative">
-        <AnimatePresence>
-          {floatingHearts.map(({id, i}) => (
-            <motion.div
-              key={id}
-              custom={i}
-              variants={floatingHeartVariants}
-              initial="initial"
-              animate="animate"
-              onAnimationComplete={() => setFloatingHearts(hearts => hearts.filter(h => h.id !== id))}
-              className="absolute"
-              style={{
-                left: `${45 + Math.random() * 10}%`,
-                bottom: "50%",
-              }}
-            >
-              <Heart className="w-6 h-6 text-red-400" fill="currentColor" />
-            </motion.div>
-          ))}
-        </AnimatePresence>
-
-        <motion.button
-          onClick={handleClick}
-          className="group flex items-center gap-3 rounded-full pl-5 pr-6 py-3 font-medium bg-gradient-to-r from-purple-600/50 to-fuchsia-500/50 hover:from-purple-500/60 hover:to-fuchsia-400/60 ring-1 ring-purple-400/30 transition-all disabled:opacity-80"
-          disabled={isLiked}
-          whileTap={{ scale: isLiked ? 1 : 0.9 }}
-        >
-          <motion.div
-            animate={{
-              scale: isLiked ? [1, 1.3, 1] : 1,
-              transition: { duration: 0.3 }
-            }}
-          >
-            <Heart className={`w-6 h-6 transition-all duration-300 ${isLiked ? 'text-red-400 fill-current' : 'text-white/80 group-hover:text-white'}`} />
-          </motion.div>
-          <span className="text-lg">{count}</span>
-        </motion.button>
+    <div id="mentees" className="text-center space-y-8">
+      <h2 className="text-3xl sm:text-4xl font-bold">A Wall of Mentees</h2>
+      <p className="text-white/70 max-w-2xl mx-auto">
+        A tribute from the community you've built. We appreciate you!
+      </p>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 sm:gap-8 max-w-3xl mx-auto">
+        {mentees.map((mentee, index) => (
+          <div key={index} className="flex flex-col items-center gap-2">
+            <Image
+              src={mentee.avatar}
+              alt={mentee.name}
+              width={100}
+              height={100}
+              className="rounded-full ring-2 ring-purple-500/50 object-cover"
+              data-ai-hint="person portrait"
+            />
+            <span className="font-medium text-white/90">{mentee.name}</span>
+          </div>
+        ))}
       </div>
-
-       {isLiked && <p className="text-green-400 text-sm mt-2">Thanks for the support!</p>}
+      <p className="text-sm text-white/50">Want to be on the wall? Reach out to the developer.</p>
     </div>
   );
 }
@@ -284,6 +247,13 @@ function MenteeEngagement() {
 
 // Contact section
 function Contact(){
+  const techStack = [
+    { name: "React & Next.js", icon: Code, description: "Modern, high-performance web foundation." },
+    { name: "Tailwind CSS", icon: Palette, description: "Utility-first styling for rapid UI development." },
+    { name: "Framer Motion", icon: Wind, description: "Elegant animations and fluid user interactions." },
+    { name: "GenAI Integration", icon: Bot, description: "Powered by AI for a touch of modern magic." },
+  ];
+
   return (
     <div id="message" className="grid lg:grid-cols-2 gap-10 items-start">
       <div className="space-y-3">
@@ -291,19 +261,60 @@ function Contact(){
         <p className="text-white/70">Your email goes straight to Thissdax. This is a demo; email sending is not live.</p>
         <ContactForm />
       </div>
-      <div className="rounded-3xl p-6 bg-gradient-to-br from-purple-900/40 to-fuchsia-900/30 ring-1 ring-white/10">
-        <h3 className="font-semibold text-lg mb-2">What’s inside this gift</h3>
-        <ul className="text-white/70 list-disc pl-6 space-y-1">
-          <li>React + Tailwind dark purple theme</li>
-          <li>Custom GLB 3D model embed</li>
-          <li>Framer Motion entrances & GSAP shimmer</li>
-          <li>Responsive design with Suspense & Preload</li>
-          <li>HOC-based section structure for scalability</li>
+      <div className="rounded-3xl p-6 bg-white/10 backdrop-blur-md ring-1 ring-white/20">
+        <h3 className="font-semibold text-xl mb-4 text-white">What’s inside this gift</h3>
+        <ul className="space-y-4">
+          {techStack.map(item => (
+            <li key={item.name} className="flex items-start gap-4">
+              <div className="p-2 bg-purple-500/20 rounded-lg">
+                <item.icon className="w-5 h-5 text-purple-300" />
+              </div>
+              <div>
+                <h4 className="font-semibold text-white/90">{item.name}</h4>
+                <p className="text-white/60 text-sm">{item.description}</p>
+              </div>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
   );
 }
+
+function AudioPlayer() {
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [isMuted, setIsMuted] = useState(true);
+
+  const toggleMute = () => {
+    if (audioRef.current) {
+      audioRef.current.muted = !audioRef.current.muted;
+      setIsMuted(audioRef.current.muted);
+    }
+  };
+  
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.play().catch(error => console.log("Autoplay was prevented.", error));
+    }
+  }, []);
+
+  return (
+    <div>
+       <audio ref={audioRef} loop muted playsInline>
+          <source src="https://firebasestorage.googleapis.com/v0/b/genkit-llm-77838.appspot.com/o/lofi-study-112191.mp3?alt=media&token=e33f06c6-4357-4b77-b952-b9b5c33842a5" type="audio/mpeg" />
+          Your browser does not support the audio element.
+        </audio>
+        <button 
+          onClick={toggleMute} 
+          className="fixed bottom-4 left-4 z-50 p-2 rounded-full bg-black/50 text-white backdrop-blur-sm"
+          aria-label={isMuted ? "Unmute" : "Mute"}
+        >
+          {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+        </button>
+    </div>
+  )
+}
+
 
 // Main App
 export default function ThissdaxBirthdayApp() {
@@ -338,6 +349,7 @@ export default function ThissdaxBirthdayApp() {
   return (
     <div className="min-h-screen">
       <FireworksEffect />
+      <AudioPlayer />
       <header className="sticky top-0 z-40 backdrop-blur bg-black/20 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px:6 lg:px:8 h-16 flex items-center justify-between">
           <a href="#home" className="font-black tracking-wide text-xl"><span className="text-purple-400">Thiss</span>•<span className="text-fuchsia-400">Dax</span> 🎂</a>
@@ -355,7 +367,7 @@ export default function ThissdaxBirthdayApp() {
         <AnimatedSection id="home"><Hero /></AnimatedSection>
         <AnimatedSection id="qm"><QuasimodoCard /></AnimatedSection>
         <AnimatedSection id="tribute-video"><VideoTribute /></AnimatedSection>
-        <AnimatedSection id="mentees"><MenteeEngagement /></AnimatedSection>
+        <AnimatedSection id="mentees"><MenteeWall /></AnimatedSection>
         <AnimatedSection id="contact"><Contact /></AnimatedSection>
       </main>
 
@@ -375,3 +387,5 @@ export default function ThissdaxBirthdayApp() {
     </div>
   );
 }
+
+    
