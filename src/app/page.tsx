@@ -379,7 +379,7 @@ export default function ThissdaxBirthdayApp() {
   return (
     <div className="min-h-screen">
       <AnimatePresence>
-        {showMusicNotif && <NowPlayingNotification songTitle="New Divide" artist="Linkin Park" albumArtUrl="https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/New_Divide.jpg" />}
+        {showMusicNotif && <NowPlayingNotification songTitle="New Divide" artist="Linkin Park" albumArtUrl="https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/images.png" />}
       </AnimatePresence>
       <FireworksEffect />
       <AudioPlayer onReady={() => setShowMusicNotif(true)} />
@@ -422,5 +422,3 @@ export default function ThissdaxBirthdayApp() {
     </div>
   );
 }
-
-    

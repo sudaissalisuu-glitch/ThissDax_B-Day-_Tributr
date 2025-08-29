@@ -62,5 +62,3 @@ export default function NowPlayingNotification({ songTitle, artist, albumArtUrl 
     </AnimatePresence>
   );
 }
-
-    
