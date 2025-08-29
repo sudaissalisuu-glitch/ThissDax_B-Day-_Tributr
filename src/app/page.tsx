@@ -103,7 +103,7 @@ function useShimmer(ref){
     if(!ref.current) return;
     const el = ref.current;
     const ctx = gsap.context(()=>{
-      gsap.fromTo(el, { backgroundPositionX: '0%' }, { backgroundPositionX: '200%', duration: 2.4, repeat: -1, ease: 'linear' });
+      gsap.fromTo(el, { backgroundPositionX: '0%' }, { backgroundPositionX: '200%', duration: 1.8, repeat: -1, ease: 'linear' });
     });
     return () => ctx.revert();
   },[ref]);
@@ -119,7 +119,7 @@ function Hero(){
       <div className="space-y-6">
         <div className="inline-block rounded-full border border-purple-500/30 px-3 py-1 text-xs tracking-widest uppercase text-purple-300">Birthday Drop • Monday</div>
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight">
-          <span ref={shimmerRef} className="bg-[linear-gradient(110deg,#e9d5ff,45%,#a855f7,55%,#e9d5ff)] bg-clip-text text-transparent bg-[length:200%_100%]">When focus hits, markets listen.</span>
+          <span ref={shimmerRef} className="bg-[linear-gradient(110deg,#a855f7,45%,#ffffff,55%,#a855f7)] bg-clip-text text-transparent bg-[length:200%_100%]">When focus hits, markets listen.</span>
         </h1>
         <p className="text-white/70 max-w-prose">Dedicated to <span className="text-purple-300 font-semibold">Thissdax</span> — FX mentor, purple vibes ambassador, and Quasimodo strategy wizard. Enjoy this little 3D tribute. 🎂</p>
         <div className="flex gap-3 flex-wrap">
