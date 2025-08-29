@@ -31,7 +31,7 @@ function AnimatedSection({ children, id }: { children: React.ReactNode, id: stri
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
   return (
-    <section id={id} ref={ref} className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px:8 py-16 overflow-hidden">
+    <section id={id} ref={ref} className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -336,18 +336,18 @@ export default function ThissdaxBirthdayApp() {
           <a href="#home" className="font-black tracking-wide text-xl"><span className="text-purple-400">Thiss</span>•<span className="text-fuchsia-400">Dax</span> 🎂</a>
           <nav className="hidden md:flex items-center gap-6 text-white/80">
             <a href="#qm" className="hover:text-white">Charts</a>
-            <a href="#video" className="hover:text-white">Tribute</a>
+            <a href="#tribute-video" className="hover:text-white">Tribute</a>
             <a href="#mentees" className="hover:text-white">Mentees</a>
-            <a href="#contact" className="hover:text-white">Message</a>
+            <a href="#message" className="hover:text-white">Message</a>
           </nav>
-          <a href="#contact" className="md:hidden rounded-xl px-3 py-2 bg-purple-600/80">Message</a>
+          <a href="#message" className="md:hidden rounded-xl px-3 py-2 bg-purple-600/80">Message</a>
         </div>
       </header>
 
       <main>
         <AnimatedSection id="home"><Hero /></AnimatedSection>
         <AnimatedSection id="qm"><QuasimodoCard /></AnimatedSection>
-        <AnimatedSection id="video"><VideoTribute /></AnimatedSection>
+        <AnimatedSection id="tribute-video"><VideoTribute /></AnimatedSection>
         <AnimatedSection id="mentees"><MenteeEngagement /></AnimatedSection>
         <AnimatedSection id="contact"><Contact /></AnimatedSection>
       </main>

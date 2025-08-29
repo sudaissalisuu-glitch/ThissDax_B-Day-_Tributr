@@ -50,6 +50,53 @@ const Pair = ({ pair }) => {
   );
 };
 
+const AnimatedText = ({ children, delay, ...props }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: [0, 1, 1, 0], y: [20, 0, 0, -20] }}
+    transition={{
+      duration: 4,
+      delay,
+      ease: 'easeInOut',
+      times: [0, 0.2, 0.8, 1],
+    }}
+    {...props}
+  >
+    {children}
+  </motion.div>
+);
+
+const ConfettiPiece = ({ i }) => {
+  const colors = ['#a855f7', '#d946ef', '#ec4899', '#f97316', '#eab308'];
+  const randomColor = colors[i % colors.length];
+  const randomX = Math.random() * 2 - 1;
+  const randomY = Math.random() * 2 - 1;
+
+  return (
+    <motion.div
+      className="absolute rounded-full"
+      style={{
+        backgroundColor: randomColor,
+        top: '50%',
+        left: '50%',
+        width: 10,
+        height: 10,
+      }}
+      animate={{
+        x: `${randomX * 300}px`,
+        y: `${randomY * 300}px`,
+        opacity: [1, 1, 0],
+        scale: [0.5, 1.5, 0],
+      }}
+      transition={{
+        duration: 1.5,
+        delay: 18,
+        ease: 'easeOut',
+      }}
+    />
+  );
+};
+
 const TributeVideoPlayer = ({ onClose }) => {
   return (
     <motion.div
@@ -67,12 +114,55 @@ const TributeVideoPlayer = ({ onClose }) => {
           <X size={32} />
         </button>
 
-        {/* Scene 1: Forex Pairs */}
-        <div className="absolute inset-0">
+        {/* Scene 1: Forex Pairs Background */}
+        <div className="absolute inset-0 overflow-hidden">
           {forexPairs.map((pair) => (
             <Pair key={pair} pair={pair} />
           ))}
         </div>
+
+        {/* Scene 2 & 3: Animated Text */}
+        <div className="w-full h-full flex flex-col items-center justify-center text-center p-8">
+          <AnimatePresence>
+            <AnimatedText
+              delay={6}
+              className="text-4xl md:text-5xl font-bold text-white mb-8"
+            >
+              The struggle is worth it.
+            </AnimatedText>
+
+            <AnimatedText
+              delay={10}
+              className="text-2xl md:text-3xl text-purple-300"
+            >
+              Your mentorship is the HL that prevents the LL.
+            </AnimatedText>
+
+            <AnimatedText
+              delay={14}
+              className="text-2xl md:text-3xl text-fuchsia-400"
+            >
+              Thanks for teaching us to see the market in purple.
+            </AnimatedText>
+            
+            <motion.div
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 18, duration: 0.5, ease: 'easeOut' }}
+                className="text-4xl md:text-6xl font-black text-white mt-8"
+             >
+                Happy Birthday, Thissdax! 🎂
+             </motion.div>
+          </AnimatePresence>
+        </div>
+        
+        {/* Scene 4: Confetti */}
+        <div className="absolute inset-0">
+          {Array.from({ length: 50 }).map((_, i) => (
+            <ConfettiPiece key={i} i={i} />
+          ))}
+        </div>
+
       </div>
     </motion.div>
   );
