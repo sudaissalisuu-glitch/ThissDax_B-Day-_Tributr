@@ -71,7 +71,7 @@ function ContactForm() {
         description: "Your birthday message has been sent to Thissdax.",
       });
       formRef.current?.reset();
-      setTimeout(() => setIsSuccess(false), 2000);
+      setTimeout(() => setIsSuccess(false), 4000);
     } else {
       const errorMessages = typeof result.errors === 'string' ? result.errors : result.errors ? Object.values(result.errors).flat().join(', ') : 'An unexpected error occurred.';
       toast({
@@ -93,6 +93,7 @@ function ContactForm() {
       <Button type="submit" disabled={isPending} className="rounded-2xl px-5 py-3 font-medium bg-gradient-to-r from-purple-600 to-fuchsia-500 hover:from-purple-500 hover:to-fuchsia-400 disabled:opacity-60">
         {isPending ? "Sending…" : isSuccess ? "Sent ✓" : "Send Message"}
       </Button>
+      {isSuccess && <p className="text-green-400 text-sm text-center">Thanks for the support! ✨</p>}
     </form>
   );
 }
@@ -312,6 +313,10 @@ export default function ThissdaxBirthdayApp() {
     // This check is to prevent hydration errors
     setYear(new Date().getFullYear());
   }, []);
+  
+  const tweetText = "Celebrating my mentor Thissdax's birthday with this awesome 3D tribute! Join in! #Forex #ThissdaxBirthday";
+  const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
+
 
   const TelegramIcon = (props) => (
     <svg
@@ -358,7 +363,7 @@ export default function ThissdaxBirthdayApp() {
         <div className="max-w-7xl mx-auto px-4 sm:px:6 lg:px:8 text-sm text-white/60 flex flex-col sm:flex-row gap-4 items-center justify-between">
           <p>Made with 💜 by Dreadshades • © {year}</p>
           <div className="flex items-center gap-4">
-            <a href="https://x.com/thissdax" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+            <a href={tweetUrl} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
               <Twitter className="w-5 h-5" />
             </a>
             <a href="https://t.me/thissdax" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
