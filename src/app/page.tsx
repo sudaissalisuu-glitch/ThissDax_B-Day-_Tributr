@@ -339,7 +339,7 @@ export default function ThissdaxBirthdayApp() {
   const tweetText = "Celebrating my mentor @thissdax's birthday with this awesome 3D tribute! Join in! #Forex #ThissdaxBirthday";
   const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
 
-  const XIcon = (props) => (
+  const XIcon = (props: React.SVGProps<HTMLSpanElement>) => (
     <span {...props}>𝕏</span>
   );
 
@@ -390,7 +390,7 @@ export default function ThissdaxBirthdayApp() {
           <p>Made with 💜 by Dreadshades • © {year}</p>
           <div className="flex items-center gap-4">
             <a href={tweetUrl} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-              <XIcon className="w-5 h-5" />
+              <XIcon className="w-5 h-5 inline-flex items-center justify-center text-lg" />
             </a>
             <a href="https://t.me/thissdax" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
               <TelegramIcon className="w-5 h-5" />
@@ -401,5 +401,3 @@ export default function ThissdaxBirthdayApp() {
     </div>
   );
 }
-
-    
