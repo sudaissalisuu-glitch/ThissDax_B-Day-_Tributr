@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import dynamic from 'next/dynamic';
 import { useActionState } from 'react';
+
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { sendBirthdayMessage } from '@/app/actions';
@@ -14,6 +15,7 @@ import { sendBirthdayMessage } from '@/app/actions';
 const HeroScene = dynamic(() => import('@/components/page/HeroScene'), { ssr: false });
 const QuasimodoScene = dynamic(() => import('@/components/page/QuasimodoScene'), { ssr: false });
 const Spline = dynamic(() => import('@splinetool/react-spline'), { ssr: false });
+
 
 // HOC: Section wrapper
 const withSection = (Component, id) => function Wrapped(props) {

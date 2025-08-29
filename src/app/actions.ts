@@ -1,9 +1,8 @@
-
 'use server';
 
 import { z } from 'zod';
 
-const schema = z.object({
+const sendBirthdayMessageSchema = z.object({
   from_name: z.string().min(1, { message: 'Name is required.' }),
   reply_to: z.string().email({ message: 'Invalid email address.' }),
   message: z.string().min(1, { message: 'Message is required.' }),
@@ -17,7 +16,7 @@ export async function sendBirthdayMessage(
   },
   formData: FormData
 ) {
-  const validatedFields = schema.safeParse({
+  const validatedFields = sendBirthdayMessageSchema.safeParse({
     from_name: formData.get('from_name'),
     reply_to: formData.get('reply_to'),
     message: formData.get('message'),
@@ -32,15 +31,14 @@ export async function sendBirthdayMessage(
   }
 
   try {
-    // NOTE: This is a placeholder. In a real application, you would
-    // integrate an email service like Resend, Nodemailer, or EmailJS here.
     console.log('--- Sending Birthday Message ---');
     console.log('From:', validatedFields.data.from_name);
     console.log('Email:', validatedFields.data.reply_to);
     console.log('Message:', validatedFields.data.message);
     console.log('-----------------------------');
-    
-    // Simulate email sending delay
+
+    // This is a demo, so we'll just simulate a delay.
+    // In a real app, you would integrate an email service like EmailJS, Resend, etc.
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     return {
