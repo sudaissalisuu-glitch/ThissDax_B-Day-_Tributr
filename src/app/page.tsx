@@ -3,7 +3,7 @@
 
 import React,
 { Suspense, useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import gsap from 'gsap';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
@@ -24,22 +24,23 @@ import {
 const QuasimodoScene = dynamic(() => import('@/components/page/QuasimodoScene'), { ssr: false });
 
 
-// HOC: Section wrapper with Framer Motion animation
-const withSection = (Component, id, index) => function Wrapped(props) {
-  const direction = index % 2 === 0 ? -1 : 1;
+// HOC Replacement: Section with viewport-triggered animation
+function AnimatedSection({ children, id }: { children: React.ReactNode, id: string }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+
   return (
-    <section id={id} className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px:8 py-16 overflow-hidden">
+    <section id={id} ref={ref} className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px:8 py-16 overflow-hidden">
       <motion.div
-        initial={{ opacity: 0, x: direction * 100 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
+        initial={{ opacity: 0, y: 50 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
       >
-        <Component {...props} />
+        {children}
       </motion.div>
     </section>
   );
-};
+}
 
 
 // Contact Form Component
@@ -132,7 +133,6 @@ function Hero(){
     </div>
   );
 }
-const HeroSection = withSection(Hero, 'home', 0);
 
 
 // Quasimodo (QM) strategy visual cue
@@ -165,8 +165,8 @@ function QuasimodoCard(){
             <CarouselNext className="right-2" />
         </Carousel>
       <div className="space-y-4">
-        <h2 className="text-3xl sm:text-4xl font-bold">Quasimodo Pattern • Tribute</h2>
-        <p className="text-white/70">A symbolic nod to the QM idea (HH/HL then BOS to form LH/LL). This is just an artistic visualization to honor your style — not trading advice.</p>
+        <h2 className="text-3xl sm:text-4xl font-bold">Quasimodo Pattern • Charts</h2>
+        <p className="text-white/70">A showcase of the precision and style that defines the QM strategy. These charts reflect the focus and dedication to the craft.</p>
         <div className="flex gap-3">
           <a href="#message" className="rounded-2xl px-5 py-3 font-medium bg-purple-600/80 hover:bg-purple-500/90">Say Happy Birthday</a>
         </div>
@@ -174,7 +174,6 @@ function QuasimodoCard(){
     </div>
   );
 }
-const QuasimodoSection = withSection(QuasimodoCard, 'qm', 1);
 
 // Video tribute section
 function VideoTribute() {
@@ -196,7 +195,6 @@ function VideoTribute() {
     </div>
   );
 }
-const VideoTributeSection = withSection(VideoTribute, 'video', 2);
 
 
 // Mentee Engagement Section
@@ -229,7 +227,6 @@ function MenteeEngagement() {
     </div>
   );
 }
-const MenteeSection = withSection(MenteeEngagement, 'mentees', 3);
 
 
 // Contact section
@@ -254,7 +251,6 @@ function Contact(){
     </div>
   );
 }
-const ContactSection = withSection(Contact, 'contact', 4);
 
 // Main App
 export default function ThissdaxBirthdayApp() {
@@ -298,11 +294,11 @@ export default function ThissdaxBirthdayApp() {
       </header>
 
       <main>
-        <HeroSection />
-        <QuasimodoSection />
-        <VideoTributeSection />
-        <MenteeSection />
-        <ContactSection />
+        <AnimatedSection id="home"><Hero /></AnimatedSection>
+        <AnimatedSection id="qm"><QuasimodoCard /></AnimatedSection>
+        <AnimatedSection id="video"><VideoTribute /></AnimatedSection>
+        <AnimatedSection id="mentees"><MenteeEngagement /></AnimatedSection>
+        <AnimatedSection id="contact"><Contact /></AnimatedSection>
       </main>
 
       <footer className="py-10 border-t border-white/10 mt-10">
