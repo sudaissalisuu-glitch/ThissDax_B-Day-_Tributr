@@ -6,7 +6,6 @@ import React,
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import dynamic from 'next/dynamic';
-import { useActionState } from 'react';
 
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
@@ -38,38 +37,49 @@ const withSection = (Component, id) => function Wrapped(props) {
 function ContactForm() {
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
-  const [state, formAction, isPending] = useActionState(sendBirthdayMessage, {
-    message: "",
-    errors: undefined,
-    success: false,
-  });
+  const [isPending, setIsPending] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
-  useEffect(() => {
-    if (state.success) {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsPending(true);
+
+    const formData = new FormData(event.currentTarget);
+    const result = await sendBirthdayMessage({
+      message: '',
+      success: false,
+    }, formData);
+
+    setIsPending(false);
+
+    if (result.success) {
+      setIsSuccess(true);
       toast({
         title: "Message Sent!",
         description: "Your birthday message has been sent to Thissdax.",
       });
       formRef.current?.reset();
-    } else if (state.errors) {
-      const errorMessages = typeof state.errors === 'string' ? state.errors : Object.values(state.errors).flat().join(', ');
+      setTimeout(() => setIsSuccess(false), 2000); 
+    } else {
+      const errorMessages = typeof result.errors === 'string' ? result.errors : result.errors ? Object.values(result.errors).flat().join(', ') : 'An unexpected error occurred.';
       toast({
         variant: "destructive",
         title: "Error",
-        description: errorMessages || 'An unexpected error occurred.',
+        description: errorMessages,
       });
     }
-  }, [state, toast]);
+  };
+
 
   return (
-    <form ref={formRef} action={formAction} className="grid gap-4">
+    <form ref={formRef} onSubmit={handleSubmit} className="grid gap-4">
       <div className="grid sm:grid-cols-2 gap-4">
         <input name="from_name" required placeholder="Your name" className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 outline-none focus:border-purple-400" />
         <input name="reply_to" type="email" required placeholder="Your email" className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 outline-none focus:border-purple-400" />
       </div>
       <textarea name="message" rows={5} required placeholder="Write a birthday note for Thissdax…" className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 outline-none focus:border-purple-400" />
       <Button type="submit" disabled={isPending} className="rounded-2xl px-5 py-3 font-medium bg-gradient-to-r from-purple-600 to-fuchsia-500 hover:from-purple-500 hover:to-fuchsia-400 disabled:opacity-60">
-        {isPending ? "Sending…" : state.success ? "Sent ✓" : "Send Message"}
+        {isPending ? "Sending…" : isSuccess ? "Sent ✓" : "Send Message"}
       </Button>
     </form>
   );
