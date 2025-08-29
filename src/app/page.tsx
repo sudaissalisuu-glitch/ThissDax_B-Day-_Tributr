@@ -11,7 +11,8 @@ import Image from 'next/image';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { sendBirthdayMessage } from '@/app/actions';
-import { Heart, Twitter, PlayCircle, Code, Palette, Wind, Bot, Volume2, VolumeX } from 'lucide-react';
+import { PlayCircle, Code, Palette, Wind, Bot, Volume2, VolumeX } from 'lucide-react';
+import Autoplay from "embla-carousel-autoplay"
 import {
   Carousel,
   CarouselContent,
@@ -120,7 +121,7 @@ function Hero(){
       <div className="space-y-6">
         <div className="inline-block rounded-full border border-purple-500/30 px-3 py-1 text-xs tracking-widest uppercase text-purple-300">Birthday Drop • Monday</div>
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight">
-          <span ref={shimmerRef} className="bg-[linear-gradient(110deg,rgba(168,85,247,1)_35%,rgba(255,255,255,1)_50%,rgba(168,85,247,1)_65%)] bg-clip-text text-transparent bg-[length:200%_100%]">When focus hits, markets listen.</span>
+          <span ref={shimmerRef} className="bg-[linear-gradient(110deg,rgba(233,213,255,1)_35%,rgba(255,255,255,1)_50%,rgba(233,213,255,1)_65%)] bg-clip-text text-transparent bg-[length:200%_100%]">When focus hits, markets listen.</span>
         </h1>
         <p className="text-white/70 max-w-prose">Dedicated to <span className="text-purple-300 font-semibold">Thissdax</span> — FX mentor, purple vibes ambassador, and Quasimodo strategy wizard. Enjoy this little 3D tribute. 🎂</p>
         <div className="flex gap-3 flex-wrap">
@@ -148,7 +149,7 @@ function QuasimodoCard(){
   return (
     <div className="grid lg:grid-cols-2 gap-10 items-center">
         <Carousel className="w-full" opts={{ loop: true }} plugins={[
-        // Autoplay({ delay: 3000 })
+         Autoplay({ delay: 3000 })
       ]}>
             <CarouselContent>
             {chartImages.map((src, index) => (
@@ -216,7 +217,15 @@ function MenteeWall() {
     { name: 'Jessica', avatar: 'https://picsum.photos/seed/jessica/200' },
     { name: 'David', avatar: 'https://picsum.photos/seed/david/200' },
     { name: 'Linda', avatar: 'https://picsum.photos/seed/linda/200' },
+    { name: 'Alex', avatar: 'https://picsum.photos/seed/alex/200' },
+    { name: 'Jordan', avatar: 'https://picsum.photos/seed/jordan/200' },
+    { name: 'Taylor', avatar: 'https://picsum.photos/seed/taylor/200' },
+    { name: 'Casey', avatar: 'https://picsum.photos/seed/casey/200' },
   ];
+  
+  const plugin = React.useRef(
+    Autoplay({ delay: 2000, stopOnInteraction: true })
+  )
 
   return (
     <div id="mentees" className="text-center space-y-8">
@@ -224,21 +233,40 @@ function MenteeWall() {
       <p className="text-white/70 max-w-2xl mx-auto">
         A tribute from the community you've built. We appreciate you!
       </p>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 sm:gap-8 max-w-3xl mx-auto">
-        {mentees.map((mentee, index) => (
-          <div key={index} className="flex flex-col items-center gap-2">
-            <Image
-              src={mentee.avatar}
-              alt={mentee.name}
-              width={100}
-              height={100}
-              className="rounded-full ring-2 ring-purple-500/50 object-cover"
-              data-ai-hint="person portrait"
-            />
-            <span className="font-medium text-white/90">{mentee.name}</span>
-          </div>
-        ))}
-      </div>
+      <Carousel 
+        plugins={[plugin.current]}
+        className="w-full max-w-4xl mx-auto"
+        onMouseEnter={() => plugin.current.stop()}
+        onMouseLeave={() => plugin.current.reset()}
+        opts={{
+          align: "start",
+          loop: true,
+        }}
+      >
+        <CarouselContent className="-ml-4">
+          {mentees.map((mentee, index) => (
+            <CarouselItem key={index} className="pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5">
+              <motion.div 
+                className="flex flex-col items-center gap-2"
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <Image
+                  src={mentee.avatar}
+                  alt={mentee.name}
+                  width={120}
+                  height={120}
+                  className="rounded-full ring-2 ring-purple-500/50 object-cover aspect-square"
+                  data-ai-hint="person portrait"
+                />
+                <span className="font-medium text-white/90 text-center">{mentee.name}</span>
+              </motion.div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
       <p className="text-sm text-white/50">Want to be on the wall? Reach out to the developer.</p>
     </div>
   );
@@ -247,35 +275,12 @@ function MenteeWall() {
 
 // Contact section
 function Contact(){
-  const techStack = [
-    { name: "React & Next.js", icon: Code, description: "Modern, high-performance web foundation." },
-    { name: "Tailwind CSS", icon: Palette, description: "Utility-first styling for rapid UI development." },
-    { name: "Framer Motion", icon: Wind, description: "Elegant animations and fluid user interactions." },
-    { name: "GenAI Integration", icon: Bot, description: "Powered by AI for a touch of modern magic." },
-  ];
-
   return (
-    <div id="message" className="grid lg:grid-cols-2 gap-10 items-start">
+    <div id="message" className="max-w-xl mx-auto text-center">
       <div className="space-y-3">
         <h2 className="text-3xl sm:text-4xl font-bold">Send a Birthday Message</h2>
         <p className="text-white/70">Your email goes straight to Thissdax. This is a demo; email sending is not live.</p>
         <ContactForm />
-      </div>
-      <div className="rounded-3xl p-6 bg-white/10 backdrop-blur-md ring-1 ring-white/20">
-        <h3 className="font-semibold text-xl mb-4 text-white">What’s inside this gift</h3>
-        <ul className="space-y-4">
-          {techStack.map(item => (
-            <li key={item.name} className="flex items-start gap-4">
-              <div className="p-2 bg-purple-500/20 rounded-lg">
-                <item.icon className="w-5 h-5 text-purple-300" />
-              </div>
-              <div>
-                <h4 className="font-semibold text-white/90">{item.name}</h4>
-                <p className="text-white/60 text-sm">{item.description}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );
@@ -287,15 +292,21 @@ function AudioPlayer() {
 
   const toggleMute = () => {
     if (audioRef.current) {
-      audioRef.current.muted = !audioRef.current.muted;
-      setIsMuted(audioRef.current.muted);
+      const currentlyMuted = audioRef.current.muted;
+      audioRef.current.muted = !currentlyMuted;
+      setIsMuted(!currentlyMuted);
     }
   };
   
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.play().catch(error => console.log("Autoplay was prevented.", error));
-    }
+    const playAudio = () => {
+      if (audioRef.current) {
+        audioRef.current.play().catch(error => console.log("Autoplay was prevented.", error));
+      }
+    };
+    // Let's try to play after a very short delay to help with some browser policies
+    const timeoutId = setTimeout(playAudio, 100);
+    return () => clearTimeout(timeoutId);
   }, []);
 
   return (
@@ -328,6 +339,22 @@ export default function ThissdaxBirthdayApp() {
   const tweetText = "Celebrating my mentor @thissdax's birthday with this awesome 3D tribute! Join in! #Forex #ThissdaxBirthday";
   const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
 
+  const XIcon = (props) => (
+    <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        width="24" 
+        height="24" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        strokeWidth="2" 
+        strokeLinecap="round" 
+        strokeLinejoin="round"
+        {...props}
+    >
+        <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+    </svg>
+  );
 
   const TelegramIcon = (props) => (
     <svg
@@ -376,7 +403,7 @@ export default function ThissdaxBirthdayApp() {
           <p>Made with 💜 by Dreadshades • © {year}</p>
           <div className="flex items-center gap-4">
             <a href={tweetUrl} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-              <Twitter className="w-5 h-5" />
+              <XIcon className="w-5 h-5" />
             </a>
             <a href="https://t.me/thissdax" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
               <TelegramIcon className="w-5 h-5" />
@@ -387,5 +414,3 @@ export default function ThissdaxBirthdayApp() {
     </div>
   );
 }
-
-    
