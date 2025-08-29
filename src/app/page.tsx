@@ -12,7 +12,6 @@ import { Button } from '@/components/ui/button';
 import { sendBirthdayMessage } from '@/app/actions';
 import { Heart, Twitter } from 'lucide-react';
 
-const HeroScene = dynamic(() => import('@/components/page/HeroScene'), { ssr: false });
 const QuasimodoScene = dynamic(() => import('@/components/page/QuasimodoScene'), { ssr: false });
 
 
@@ -116,9 +115,7 @@ function Hero(){
         </div>
       </div>
       <div id="scene" className="h-[420px]">
-        <Suspense fallback={<div className="w-full h-full bg-black/20 animate-pulse rounded-3xl" />}>
-            <HeroScene />
-        </Suspense>
+        <div className="w-full h-full bg-black/20 rounded-3xl" />
       </div>
     </div>
   );
