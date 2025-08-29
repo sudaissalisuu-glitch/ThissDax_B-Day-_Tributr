@@ -3,7 +3,7 @@
 
 import React,
 { Suspense, useEffect, useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
@@ -22,6 +22,7 @@ import {
 
 
 const QuasimodoScene = dynamic(() => import('@/components/page/QuasimodoScene'), { ssr: false });
+const TributeVideoPlayer = dynamic(() => import('@/components/page/TributeVideoPlayer'), { ssr: false });
 
 
 // HOC Replacement: Section with viewport-triggered animation
@@ -177,6 +178,8 @@ function QuasimodoCard(){
 
 // Video tribute section
 function VideoTribute() {
+  const [isPlaying, setIsPlaying] = useState(false);
+
   return (
     <div id="tribute-video" className="text-center space-y-4">
       <h2 className="text-3xl sm:text-4xl font-bold">A Special Message</h2>
@@ -185,6 +188,7 @@ function VideoTribute() {
       </p>
       <div className="flex justify-center">
         <Button
+          onClick={() => setIsPlaying(true)}
           variant="outline"
           className="rounded-full pl-5 pr-6 py-3 font-medium text-lg border-purple-400/30 hover:border-purple-400/80 hover:text-white"
         >
@@ -192,38 +196,85 @@ function VideoTribute() {
           Watch Video
         </Button>
       </div>
+      {isPlaying && <TributeVideoPlayer onClose={() => setIsPlaying(false)} />}
     </div>
   );
 }
 
 
+const floatingHeartVariants = {
+  initial: { y: 0, opacity: 1 },
+  animate: (i) => ({
+    y: -100,
+    opacity: 0,
+    transition: {
+      delay: i * 0.1,
+      duration: 1,
+      ease: "easeOut",
+    },
+  }),
+};
+
 // Mentee Engagement Section
 function MenteeEngagement() {
   const [isLiked, setIsLiked] = useState(false);
-  const [count, setCount] = useState(42); // Starting count
+  const [count, setCount] = useState(42);
+  const [floatingHearts, setFloatingHearts] = useState([]);
 
   const handleClick = () => {
     if (!isLiked) {
       setIsLiked(true);
       setCount(count + 1);
+      const newHearts = Array.from({ length: 5 }).map((_, i) => ({ id: Date.now() + i, i }));
+      setFloatingHearts(newHearts);
     }
   };
 
   return (
-    <div id="mentees" className="text-center space-y-4">
+    <div id="mentees" className="text-center space-y-4 relative">
       <h2 className="text-3xl sm:text-4xl font-bold">Are you a Mentee?</h2>
       <p className="text-white/70 max-w-2xl mx-auto">Show some love and mark your presence! Click the heart to let Thissdax know you stopped by.</p>
-      <div className="flex justify-center">
-        <button
+      
+      <div className="flex justify-center relative">
+        <AnimatePresence>
+          {floatingHearts.map(({id, i}) => (
+            <motion.div
+              key={id}
+              custom={i}
+              variants={floatingHeartVariants}
+              initial="initial"
+              animate="animate"
+              onAnimationComplete={() => setFloatingHearts(hearts => hearts.filter(h => h.id !== id))}
+              className="absolute"
+              style={{
+                left: `${45 + Math.random() * 10}%`,
+                bottom: "50%",
+              }}
+            >
+              <Heart className="w-6 h-6 text-red-400" fill="currentColor" />
+            </motion.div>
+          ))}
+        </AnimatePresence>
+
+        <motion.button
           onClick={handleClick}
-          className="group flex items-center gap-3 rounded-full pl-5 pr-6 py-3 font-medium bg-gradient-to-r from-purple-600/50 to-fuchsia-500/50 hover:from-purple-500/60 hover:to-fuchsia-400/60 ring-1 ring-purple-400/30 transition-all transform hover:scale-105 disabled:opacity-80"
+          className="group flex items-center gap-3 rounded-full pl-5 pr-6 py-3 font-medium bg-gradient-to-r from-purple-600/50 to-fuchsia-500/50 hover:from-purple-500/60 hover:to-fuchsia-400/60 ring-1 ring-purple-400/30 transition-all disabled:opacity-80"
           disabled={isLiked}
+          whileTap={{ scale: isLiked ? 1 : 0.9 }}
         >
-          <Heart className={`w-6 h-6 transition-all duration-300 ${isLiked ? 'text-red-400 fill-current' : 'text-white/80 group-hover:text-white'}`} />
+          <motion.div
+            animate={{
+              scale: isLiked ? [1, 1.3, 1] : 1,
+              transition: { duration: 0.3 }
+            }}
+          >
+            <Heart className={`w-6 h-6 transition-all duration-300 ${isLiked ? 'text-red-400 fill-current' : 'text-white/80 group-hover:text-white'}`} />
+          </motion.div>
           <span className="text-lg">{count}</span>
-        </button>
+        </motion.button>
       </div>
-       {isLiked && <p className="text-green-400 text-sm">Thanks for the support!</p>}
+
+       {isLiked && <p className="text-green-400 text-sm mt-2">Thanks for the support!</p>}
     </div>
   );
 }
@@ -317,5 +368,3 @@ export default function ThissdaxBirthdayApp() {
     </div>
   );
 }
-
-    
