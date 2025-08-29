@@ -6,11 +6,12 @@ import React,
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { sendBirthdayMessage } from '@/app/actions';
-import { Heart, Twitter } from 'lucide-react';
+import { Heart, Twitter, PlayCircle } from 'lucide-react';
 
 const QuasimodoScene = dynamic(() => import('@/components/page/QuasimodoScene'), { ssr: false });
 
@@ -129,14 +130,19 @@ const HeroSection = withSection(Hero, 'home');
 function QuasimodoCard(){
   return (
     <div className="grid lg:grid-cols-2 gap-10 items-center">
-      <div className="rounded-3xl p-6 bg-white/5 ring-1 ring-white/10 backdrop-blur h-[420px]">
-        <Suspense fallback={<div className="w-full h-full bg-black/20 animate-pulse rounded-2xl" />}>
-            <QuasimodoScene />
-        </Suspense>
+        <div className="rounded-3xl p-6 bg-white/5 ring-1 ring-white/10 backdrop-blur aspect-video overflow-hidden">
+            <Image
+            src="https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/AUDJPY_2025-07-31_08-38-09.png"
+            alt="Forex Chart"
+            width={1200}
+            height={675}
+            className="rounded-xl w-full h-full object-cover"
+            data-ai-hint="forex chart"
+            />
       </div>
       <div className="space-y-4">
         <h2 className="text-3xl sm:text-4xl font-bold">Quasimodo Pattern • Tribute</h2>
-        <p className="text-white/70">A symbolic 3D nod to the QM idea (HH/HL then BOS to form LH/LL). This is just an artistic visualization to honor your style — not trading advice.</p>
+        <p className="text-white/70">A symbolic nod to the QM idea (HH/HL then BOS to form LH/LL). This is just an artistic visualization to honor your style — not trading advice.</p>
         <div className="flex gap-3">
           <a href="#message" className="rounded-2xl px-5 py-3 font-medium bg-purple-600/80 hover:bg-purple-500/90">Say Happy Birthday</a>
         </div>
@@ -145,6 +151,29 @@ function QuasimodoCard(){
   );
 }
 const QuasimodoSection = withSection(QuasimodoCard, 'qm');
+
+// Video tribute section
+function VideoTribute() {
+  return (
+    <div id="tribute-video" className="text-center space-y-4">
+      <h2 className="text-3xl sm:text-4xl font-bold">A Special Message</h2>
+      <p className="text-white/70 max-w-2xl mx-auto">
+        A short video tribute for the mentor.
+      </p>
+      <div className="flex justify-center">
+        <Button
+          variant="outline"
+          className="rounded-full pl-5 pr-6 py-3 font-medium text-lg border-purple-400/30 hover:border-purple-400/80 hover:text-white"
+        >
+          <PlayCircle className="w-6 h-6 mr-2" />
+          Watch Video
+        </Button>
+      </div>
+    </div>
+  );
+}
+const VideoTributeSection = withSection(VideoTribute, 'video');
+
 
 // Mentee Engagement Section
 function MenteeEngagement() {
@@ -236,6 +265,7 @@ export default function ThissdaxBirthdayApp() {
           <a href="#home" className="font-black tracking-wide text-xl"><span className="text-purple-400">Thiss</span>•<span className="text-fuchsia-400">Dax</span> 🎂</a>
           <nav className="hidden md:flex items-center gap-6 text-white/80">
             <a href="#qm" className="hover:text-white">Quasimodo</a>
+            <a href="#video" className="hover:text-white">Tribute</a>
             <a href="#mentees" className="hover:text-white">Mentees</a>
             <a href="#contact" className="hover:text-white">Message</a>
           </nav>
@@ -246,6 +276,7 @@ export default function ThissdaxBirthdayApp() {
       <main>
         <HeroSection />
         <QuasimodoSection />
+        <VideoTributeSection />
         <MenteeSection />
         <ContactSection />
       </main>
