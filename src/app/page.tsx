@@ -11,7 +11,7 @@ import Image from 'next/image';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { sendBirthdayMessage } from '@/app/actions';
-import { PlayCircle, Code, Palette, Wind, Bot, Volume2, VolumeX } from 'lucide-react';
+import { PlayCircle, Volume2, VolumeX } from 'lucide-react';
 import Autoplay from "embla-carousel-autoplay"
 import {
   Carousel,
@@ -20,6 +20,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import { ThissdaxLogo } from '@/components/page/ThissdaxLogo';
 
 
 const QuasimodoScene = dynamic(() => import('@/components/page/QuasimodoScene'), { ssr: false });
@@ -299,19 +300,30 @@ function AudioPlayer() {
   };
   
   useEffect(() => {
-    const playAudio = () => {
+    const playAudio = async () => {
       if (audioRef.current) {
-        audioRef.current.play().catch(error => console.log("Autoplay was prevented.", error));
+        try {
+          // We try to play unmuted. Browsers might block this!
+          audioRef.current.muted = false;
+          await audioRef.current.play();
+          setIsMuted(false);
+        } catch (error) {
+          console.log("Autoplay with sound was prevented by the browser. Starting muted.", error);
+          // If it fails, we play it muted and the user can unmute.
+          audioRef.current.muted = true;
+          audioRef.current.play();
+          setIsMuted(true);
+        }
       }
     };
-    // Let's try to play after a very short delay to help with some browser policies
+    // Let's try to play after a short delay
     const timeoutId = setTimeout(playAudio, 100);
     return () => clearTimeout(timeoutId);
   }, []);
 
   return (
     <div>
-       <audio ref={audioRef} loop muted playsInline>
+       <audio ref={audioRef} loop playsInline>
           <source src="https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/New%20Divide%20(Official%20Music%20Video)%20%5B4K%20Upgrade%5D%20-%20Linkin%20Park.mp3" type="audio/mpeg" />
           Your browser does not support the audio element.
         </audio>
@@ -366,7 +378,9 @@ export default function ThissdaxBirthdayApp() {
       <AudioPlayer />
       <header className="sticky top-0 z-40 backdrop-blur bg-black/20 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px:6 lg:px:8 h-16 flex items-center justify-between">
-          <a href="#home" className="font-black tracking-wide text-xl"><span className="text-purple-400">Thiss</span>•<span className="text-fuchsia-400">Dax</span> 🎂</a>
+          <a href="#home" className="flex items-center gap-2 font-black tracking-wide text-xl">
+             <ThissdaxLogo /> 🎂
+          </a>
           <nav className="hidden md:flex items-center gap-6 text-white/80">
             <a href="#qm" className="hover:text-white">Charts</a>
             <a href="#tribute-video" className="hover:text-white">Tribute</a>
@@ -401,3 +415,5 @@ export default function ThissdaxBirthdayApp() {
     </div>
   );
 }
+
+    
