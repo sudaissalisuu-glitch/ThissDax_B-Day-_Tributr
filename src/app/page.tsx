@@ -29,10 +29,10 @@ const withSection = (Component, id) => function Wrapped(props) {
   return (
     <section id={id} className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px:8 py-16">
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
+        transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
       >
         <Component {...props} />
       </motion.div>
@@ -320,5 +320,3 @@ export default function ThissdaxBirthdayApp() {
     </div>
   );
 }
-
-    
