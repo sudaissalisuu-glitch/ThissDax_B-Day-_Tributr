@@ -234,6 +234,7 @@ function MenteeWall() {
     { name: 'Alex', avatar: 'https://picsum.photos/seed/alex/200' },
     { name: 'Jordan', avatar: 'https://picsum.photos/seed/jordan/200' },
     { name: 'Taylor', avatar: 'https://picsum.photos/seed/taylor/200' },
+    { name: 'Joshua Ogbeifun', avatar: 'https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/photo_2025-08-30_01-40-01.jpg' },
     { name: 'Casey', avatar: 'https://picsum.photos/seed/casey/200' },
   ];
   
@@ -475,5 +476,7 @@ export default function ThissdaxBirthdayApp() {
     </div>
   );
 }
+
+    
 
     
