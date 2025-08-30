@@ -288,44 +288,43 @@ export default function ThissdaxBirthdayApp() {
       
       <FireworksEffect />
 
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-        <header className="sticky top-0 z-40 backdrop-blur bg-black/20 border-b border-white/10">
-          <div className="max-w-7xl mx-auto px-4 sm:px:6 lg:px-8 h-16 flex items-center justify-between">
-            <a href="#home" className="flex items-center gap-2 font-black tracking-wide text-xl">
-              <ThissdaxLogo />
+      
+      <header className="sticky top-0 z-40 backdrop-blur bg-black/20 border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px:6 lg:px-8 h-16 flex items-center justify-between">
+          <a href="#home" className="flex items-center gap-2 font-black tracking-wide text-xl">
+            <ThissdaxLogo />
+          </a>
+          <nav className="hidden md:flex items-center gap-6 text-white/80">
+            <a href="#qm" className="hover:text-white">Charts</a>
+            <a href="#tribute-video" className="hover:text-white">Tribute</a>
+            <a href="#mentees" className="hover:text-white">Mentees</a>
+            <a href="#toolkit" className="hover:text-white">Toolkit</a>
+          </nav>
+          <a href={tweetUrl} target="_blank" rel="noopener noreferrer" className="md:hidden rounded-xl px-3 py-2 bg-purple-600/80">Share</a>
+        </div>
+      </header>
+
+      <main>
+        <Hero />
+        <QuasimodoCard />
+        <VideoTribute audioRef={audioRef} />
+        <MenteeWall />
+        <TradersToolkit />
+      </main>
+
+      <footer className="py-10 border-t border-white/10 mt-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-sm text-white/60 flex flex-col sm:flex-row gap-4 items-center justify-between">
+          <p>Made with 💜 by Dreadshades • © {year}</p>
+          <div className="flex items-center gap-4">
+            <a href={tweetUrl} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+              <XIcon className="w-5 h-5 inline-flex items-center justify-center text-lg" />
             </a>
-            <nav className="hidden md:flex items-center gap-6 text-white/80">
-              <a href="#qm" className="hover:text-white">Charts</a>
-              <a href="#tribute-video" className="hover:text-white">Tribute</a>
-              <a href="#mentees" className="hover:text-white">Mentees</a>
-              <a href="#toolkit" className="hover:text-white">Toolkit</a>
-            </nav>
-            <a href={tweetUrl} target="_blank" rel="noopener noreferrer" className="md:hidden rounded-xl px-3 py-2 bg-purple-600/80">Share</a>
+            <a href="https://t.me/thissdax" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+              <TelegramIcon className="w-5 h-5" />
+            </a>
           </div>
-        </header>
-
-        <main>
-          <Hero />
-          <QuasimodoCard />
-          <VideoTribute audioRef={audioRef} />
-          <MenteeWall />
-          <TradersToolkit />
-        </main>
-
-        <footer className="py-10 border-t border-white/10 mt-10">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-sm text-white/60 flex flex-col sm:flex-row gap-4 items-center justify-between">
-            <p>Made with 💜 by Dreadshades • © {year}</p>
-            <div className="flex items-center gap-4">
-              <a href={tweetUrl} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-                <XIcon className="w-5 h-5 inline-flex items-center justify-center text-lg" />
-              </a>
-              <a href="https://t.me/thissdax" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-                <TelegramIcon className="w-5 h-5" />
-              </a>
-            </div>
-          </div>
-        </footer>
-      </motion.div>
+        </div>
+      </footer>
     </div>
   );
 }
