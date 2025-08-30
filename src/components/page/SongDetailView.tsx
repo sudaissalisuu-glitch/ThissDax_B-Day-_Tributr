@@ -48,14 +48,6 @@ const SongDetailView = ({ onClose }) => {
             </p>
             <div className="flex flex-wrap justify-center gap-3">
              <a 
-                href="https://open.spotify.com/track/6Wx88Mv6b9ofj43i1j3Yal" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="inline-flex items-center gap-2 bg-green-500 text-white font-bold py-2 px-5 rounded-full hover:bg-green-600 transition-colors"
-            >
-                Listen on Spotify
-            </a>
-             <a 
                 href="https://www.youtube.com/watch?v=ysSxxIqKNN0" 
                 target="_blank" 
                 rel="noopener noreferrer" 

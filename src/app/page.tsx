@@ -308,6 +308,7 @@ function Contact(){
 function AudioPlayer({ onReady }) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isMuted, setIsMuted] = useState(true);
+  const onReadyCalled = useRef(false);
 
   const toggleMute = () => {
     if (audioRef.current) {
@@ -324,14 +325,20 @@ function AudioPlayer({ onReady }) {
           audioRef.current.muted = false;
           await audioRef.current.play();
           setIsMuted(false);
-          onReady();
+          if (!onReadyCalled.current) {
+            onReady();
+            onReadyCalled.current = true;
+          }
         } catch (error) {
           console.log("Autoplay with sound was prevented by the browser. Starting muted.", error);
           audioRef.current.muted = true;
            try {
             await audioRef.current.play();
             setIsMuted(true);
-            onReady();
+            if (!onReadyCalled.current) {
+              onReady();
+              onReadyCalled.current = true;
+            }
           } catch(e) {
             console.log("Autoplay is completely blocked.", e);
           }
