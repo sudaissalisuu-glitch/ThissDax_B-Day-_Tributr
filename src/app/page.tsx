@@ -224,6 +224,7 @@ function VideoTribute() {
 function MenteeWall() {
   const mentees = [
     { name: 'Sudais Salisu', aka: 'Aka Dreadshades', avatar: 'https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/WhatsApp%20Image%202025-07-03%20at%2017.44.45_bfe486bb.jpg' },
+    { name: 'Joshua Ogbeifun', avatar: 'https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/photo_2025-08-30_01-40-01.jpg' },
     { name: 'Sarah', avatar: 'https://picsum.photos/seed/sarah/200' },
     { name: 'Mike', avatar: 'https://picsum.photos/seed/mike/200' },
     { name: 'Emily', avatar: 'https://picsum.photos/seed/emily/200' },
@@ -234,7 +235,6 @@ function MenteeWall() {
     { name: 'Alex', avatar: 'https://picsum.photos/seed/alex/200' },
     { name: 'Jordan', avatar: 'https://picsum.photos/seed/jordan/200' },
     { name: 'Taylor', avatar: 'https://picsum.photos/seed/taylor/200' },
-    { name: 'Joshua Ogbeifun', avatar: 'https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/photo_2025-08-30_01-40-01.jpg' },
     { name: 'Casey', avatar: 'https://picsum.photos/seed/casey/200' },
   ];
   
@@ -265,9 +265,10 @@ function MenteeWall() {
             {mentees.map((mentee, index) => (
               <CarouselItem key={index} className="pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5">
                 <motion.div 
-                  className="flex flex-col items-center gap-2"
+                  className="flex flex-col items-center gap-2 group"
                   initial={{ opacity: 0, scale: 0.8 }}
                   whileInView={{ opacity: 1, scale: 1 }}
+                  whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                   viewport={{ once: true, amount: 0.5 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
@@ -479,9 +480,3 @@ export default function ThissdaxBirthdayApp() {
     </div>
   );
 }
-
-    
-
-    
-
-    
