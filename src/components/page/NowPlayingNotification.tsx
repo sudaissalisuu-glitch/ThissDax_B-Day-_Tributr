@@ -12,10 +12,8 @@ export default function NowPlayingNotification({ songTitle, artist, albumArtUrl,
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(false);
-      if (onComplete) {
-        // Delay completion to allow exit animation
-        setTimeout(onComplete, 1000); 
-      }
+      // Delay completion to allow exit animation
+      setTimeout(onComplete, 1000); 
     }, 5000); // Disappear after 5 seconds
 
     return () => clearTimeout(timer);
@@ -25,11 +23,11 @@ export default function NowPlayingNotification({ songTitle, artist, albumArtUrl,
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          initial={{ y: -100, opacity: 0 }}
+          initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -100, opacity: 0, transition: { duration: 0.5, ease: "easeIn" } }}
+          exit={{ y: 100, opacity: 0, transition: { duration: 0.5, ease: "easeIn" } }}
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-          className="fixed top-4 left-1/2 -translate-x-1/2 z-50"
+          className="fixed bottom-4 left-4 z-50"
           onClick={onClick}
           style={{ cursor: 'pointer' }}
         >
@@ -50,8 +48,7 @@ export default function NowPlayingNotification({ songTitle, artist, albumArtUrl,
                 width={36}
                 height={36}
                 alt="Album Art"
-                className="rounded-full aspect-square object-cover animate-spin"
-                style={{ animationDuration: '5s' }}
+                className="rounded-full aspect-square object-cover"
                 data-ai-hint="album art"
               />
               <div className="flex flex-col text-left whitespace-nowrap">

@@ -27,6 +27,7 @@ const TributeVideoPlayer = dynamic(() => import('@/components/page/TributeVideoP
 const FireworksEffect = dynamic(() => import('@/components/page/FireworksEffect'), { ssR: false });
 const NowPlayingNotification = dynamic(() => import('@/components/page/NowPlayingNotification'), { ssR: false });
 const SongDetailView = dynamic(() => import('@/components/page/SongDetailView'), { ssR: false });
+const ThissdaxLogo = dynamic(() => import('@/components/page/ThissdaxLogo').then(m => m.ThissdaxLogo), { ssr: false });
 
 
 const AnimatedText = ({ children, className, delay = 0.2 }) => {
@@ -305,7 +306,7 @@ function Contact(){
   );
 }
 
-function AudioPlayer({ onReady }) {
+function AudioPlayer({ onReady, showMuteButton }) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isMuted, setIsMuted] = useState(true);
   const onReadyCalled = useRef(false);
@@ -320,7 +321,7 @@ function AudioPlayer({ onReady }) {
   
   useEffect(() => {
     const playAudio = async () => {
-      if (audioRef.current) {
+      if (audioRef.current && !onReadyCalled.current) {
         try {
           audioRef.current.muted = false;
           await audioRef.current.play();
@@ -355,13 +356,13 @@ function AudioPlayer({ onReady }) {
           <source src="https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/New%20Divide%20(Official%20Music%20Video)%20%5B4K%20Upgrade%5D%20-%20Linkin%20Park.mp3" type="audio/mpeg" />
           Your browser does not support the audio element.
         </audio>
-        <button 
+        {showMuteButton && <button 
           onClick={toggleMute} 
           className="fixed bottom-4 left-4 z-50 p-2 rounded-full bg-black/50 text-white backdrop-blur-sm"
           aria-label={isMuted ? "Unmute" : "Mute"}
         >
           {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-        </button>
+        </button>}
     </div>
   )
 }
@@ -372,10 +373,25 @@ export default function ThissdaxBirthdayApp() {
   const [year, setYear] = useState(new Date().getFullYear());
   const [showMusicNotif, setShowMusicNotif] = useState(false);
   const [showSongDetail, setShowSongDetail] = useState(false);
+  const [showMuteButton, setShowMuteButton] = useState(false);
+  const notificationShown = useRef(false);
+
 
   useEffect(() => {
     setYear(new Date().getFullYear());
   }, []);
+
+  const handleAudioReady = () => {
+    if (!notificationShown.current) {
+      setShowMusicNotif(true);
+      notificationShown.current = true;
+    }
+  };
+
+  const handleNotificationComplete = () => {
+    setShowMusicNotif(false);
+    setShowMuteButton(true);
+  };
   
   const tweetText = "Celebrating my mentor @thissdax's birthday with this awesome 3D tribute! Join in! #Forex #ThissdaxBirthday";
   const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
@@ -409,7 +425,7 @@ export default function ThissdaxBirthdayApp() {
           artist="Linkin Park" 
           albumArtUrl="https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/images.png"
           onClick={() => setShowSongDetail(true)}
-          onComplete={() => setShowMusicNotif(false)}
+          onComplete={handleNotificationComplete}
            />}
       </AnimatePresence>
 
@@ -418,11 +434,12 @@ export default function ThissdaxBirthdayApp() {
       )}
 
       <FireworksEffect />
-      <AudioPlayer onReady={() => setShowMusicNotif(true)} />
+      <AudioPlayer onReady={handleAudioReady} showMuteButton={showMuteButton}/>
+
       <header className="sticky top-0 z-40 backdrop-blur bg-black/20 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px:6 lg:px-8 h-16 flex items-center justify-between">
           <a href="#home" className="flex items-center gap-2 font-black tracking-wide text-xl">
-             Thissdax 🎂
+            <ThissdaxLogo />
           </a>
           <nav className="hidden md:flex items-center gap-6 text-white/80">
             <a href="#qm" className="hover:text-white">Charts</a>
