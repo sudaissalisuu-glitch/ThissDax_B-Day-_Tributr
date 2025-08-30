@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { X } from 'lucide-react';
+import { X, Youtube } from 'lucide-react';
 import Image from 'next/image';
 
 const SongDetailView = ({ onClose }) => {
@@ -36,8 +36,7 @@ const SongDetailView = ({ onClose }) => {
                 width={150}
                 height={150}
                 alt="Album Art"
-                className="rounded-xl shadow-lg animate-spin"
-                style={{ animationDuration: '10s' }}
+                className="rounded-xl shadow-lg"
                 data-ai-hint="album art"
             />
             <div className='space-y-1'>
@@ -47,14 +46,24 @@ const SongDetailView = ({ onClose }) => {
             <p className="text-sm text-white/60">
                 "New Divide" is a song by American rock band Linkin Park. It was released as a single and was featured as the theme for the film *Transformers: Revenge of the Fallen*.
             </p>
+            <div className="flex flex-wrap justify-center gap-3">
              <a 
                 href="https://open.spotify.com/track/6Wx88Mv6b9ofj43i1j3Yal" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="inline-block bg-green-500 text-white font-bold py-2 px-6 rounded-full hover:bg-green-600 transition-colors"
+                className="inline-flex items-center gap-2 bg-green-500 text-white font-bold py-2 px-5 rounded-full hover:bg-green-600 transition-colors"
             >
                 Listen on Spotify
             </a>
+             <a 
+                href="https://www.youtube.com/watch?v=ysSxxIqKNN0" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="inline-flex items-center gap-2 bg-red-600 text-white font-bold py-2 px-5 rounded-full hover:bg-red-700 transition-colors"
+            >
+                <Youtube size={20} /> Watch on YouTube
+            </a>
+            </div>
         </div>
       </motion.div>
     </motion.div>
