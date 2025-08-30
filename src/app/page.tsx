@@ -254,59 +254,53 @@ function MenteeWall() {
     { name: 'Taylor', avatar: 'https://picsum.photos/seed/taylor/200' },
     { name: 'Casey', avatar: 'https://picsum.photos/seed/casey/200' },
   ];
-  
-  const plugin = React.useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: true })
-  )
 
   return (
     <section id="mentees" className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 overflow-hidden">
       <div className="text-center space-y-8">
-        <AnimatedText><h2 className="text-3xl sm:text-4xl font-bold">A Wall of Mentees</h2></AnimatedText>
+        <AnimatedText>
+          <h2 className="text-3xl sm:text-4xl font-bold">A Wall of Mentees</h2>
+        </AnimatedText>
         <AnimatedText delay={0.3}>
           <p className="text-white/70 max-w-2xl mx-auto">
             A tribute from the community you've built. We appreciate you!
           </p>
         </AnimatedText>
-        <Carousel 
-          plugins={[plugin.current]}
-          className="w-full max-w-4xl mx-auto"
-          onMouseEnter={() => plugin.current.stop()}
-          onMouseLeave={() => plugin.current.reset()}
-          opts={{
-            align: "start",
-            loop: true,
-          }}
-        >
-          <CarouselContent className="-ml-4">
-            {mentees.map((mentee, index) => (
-              <CarouselItem key={index} className="pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5">
-                <motion.div 
-                  className="flex flex-col items-center gap-2 group"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                  viewport={{ once: true, amount: 0.5 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <Image
-                    src={mentee.avatar}
-                    alt={mentee.name}
-                    width={120}
-                    height={120}
-                    className="rounded-full ring-2 ring-purple-500/50 object-cover aspect-square"
-                    data-ai-hint="person portrait"
-                  />
-                  <div className="text-center">
-                    <span className="font-medium text-white/90">{mentee.name}</span>
-                    {mentee.aka && <span className="block text-xs text-purple-300/80">{mentee.aka}</span>}
-                  </div>
-                </motion.div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-        <AnimatedText delay={0.4}><p className="text-sm text-white/50">Want to be on the wall? Reach out to the developer.</p></AnimatedText>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-6 gap-y-8 max-w-6xl mx-auto">
+          {mentees.map((mentee, index) => (
+            <motion.div
+              key={index}
+              className="flex flex-col items-center gap-2 group"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
+              <Image
+                src={mentee.avatar}
+                alt={mentee.name}
+                width={120}
+                height={120}
+                className="rounded-full ring-2 ring-purple-500/50 object-cover aspect-square"
+                data-ai-hint="person portrait"
+              />
+              <div className="text-center">
+                <span className="font-medium text-white/90">{mentee.name}</span>
+                {mentee.aka && (
+                  <span className="block text-xs text-purple-300/80">{mentee.aka}</span>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <AnimatedText delay={0.4}>
+          <p className="text-sm text-white/50">
+            Want to be on the wall? Reach out to the developer.
+          </p>
+        </AnimatedText>
       </div>
     </section>
   );
