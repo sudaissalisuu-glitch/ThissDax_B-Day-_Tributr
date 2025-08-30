@@ -124,7 +124,7 @@ function Hero(){
         <div className="space-y-6">
           <div className="inline-block rounded-full border border-purple-500/30 px-3 py-1 text-xs tracking-widest uppercase text-purple-300">Birthday Drop • Monday</div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight">
-            <span ref={shimmerRef} className="bg-[linear-gradient(110deg,rgba(233,213,255,1)_35%,rgba(255,255,255,1)_50%,rgba(233,213,255,1)_65%)] bg-clip-text text-transparent bg-[length:200%_100%]">When focus hits, markets listen.</span>
+            <span ref={shimmerRef} className="bg-[linear-gradient(110deg,hsl(var(--primary))_35%,rgba(255,255,255,1)_50%,hsl(var(--primary))_65%)] bg-clip-text text-transparent bg-[length:200%_100%]">When focus hits, markets listen.</span>
           </h1>
           <p className="text-white/70 max-w-prose">Dedicated to <span className="text-purple-300 font-semibold">Thissdax</span> — FX mentor, purple vibes ambassador, and Quasimodo strategy wizard. Enjoy this little 3D tribute. 🎂</p>
           <div className="flex gap-3 flex-wrap">
