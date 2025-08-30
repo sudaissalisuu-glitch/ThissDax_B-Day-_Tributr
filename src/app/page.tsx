@@ -82,7 +82,6 @@ function Hero(){
                   <QuasimodoScene />
               </Suspense>
             </div>
-            <p className="mt-4 text-center text-sm italic text-purple-300/70">When you focus, the market listens.</p>
         </div>
       </div>
     </section>
