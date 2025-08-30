@@ -423,7 +423,7 @@ export default function ThissdaxBirthdayApp() {
         {showMusicNotif && <NowPlayingNotification 
           songTitle="New Divide" 
           artist="Linkin Park" 
-          albumArtUrl="https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/images.png"
+          albumArtUrl="https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/images.png?raw=true"
           onClick={() => setShowSongDetail(true)}
           onComplete={handleNotificationComplete}
            />}
@@ -475,3 +475,5 @@ export default function ThissdaxBirthdayApp() {
     </div>
   );
 }
+
+    
