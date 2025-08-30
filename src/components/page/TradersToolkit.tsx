@@ -2,29 +2,29 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Shield, Brain, Network, Target } from 'lucide-react';
+import { Network, BarChart3, ListOrdered, GitMerge } from 'lucide-react';
 import React from 'react';
 
 const toolkitItems = [
   {
-    icon: <Shield className="w-8 h-8 text-purple-400" />,
-    title: 'Risk Management',
-    description: 'Protecting capital is the first rule. Trade to trade another day.',
-  },
-  {
     icon: <Network className="w-8 h-8 text-purple-400" />,
-    title: 'Market Structure',
-    description: 'Understand the trend, respect the higher highs and lower lows.',
+    title: 'Abido Shaker (Orderflow)',
+    description: 'Mastering the flow of orders to anticipate market direction.',
   },
   {
-    icon: <Brain className="w-8 h-8 text-purple-400" />,
-    title: 'Trading Psychology',
-    description: 'The market is a reflection of you. Master your mind, master the trade.',
+    icon: <BarChart3 className="w-8 h-8 text-purple-400" />,
+    title: 'Volume Profile',
+    description: 'Identifying key levels of support and resistance based on trading volume.',
   },
   {
-    icon: <Target className="w-8 h-8 text-purple-400" />,
-    title: 'Discipline & Patience',
-    description: 'Wait for your setup. The best trades come to those who are patient.',
+    icon: <ListOrdered className="w-8 h-8 text-purple-400" />,
+    title: 'Depth of Market (DOM)',
+    description: 'Reading the order book to see buy and sell pressure in real-time.',
+  },
+  {
+    icon: <GitMerge className="w-8 h-8 text-purple-400" />,
+    title: 'TA VWAP',
+    description: 'Using the Volume Weighted Average Price as a key indicator.',
   },
 ];
 
