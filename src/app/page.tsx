@@ -77,8 +77,8 @@ function Hero(){
           </div>
         </div>
         <div className="flex flex-col items-center">
-            <div id="scene" className="h-[420px] w-full rounded-2xl overflow-hidden">
-              <Suspense fallback={<div className="w-full h-full bg-black/20 animate-pulse rounded-2xl" />}>
+            <div id="scene" className="h-[420px] w-[420px] rounded-full overflow-hidden">
+              <Suspense fallback={<div className="w-full h-full bg-black/20 animate-pulse rounded-full" />}>
                   <QuasimodoScene />
               </Suspense>
             </div>
