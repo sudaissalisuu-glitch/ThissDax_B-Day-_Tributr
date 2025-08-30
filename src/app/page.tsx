@@ -242,17 +242,6 @@ function MenteeWall() {
   const mentees = [
     { name: 'Sudais Salisu', aka: 'Aka Dreadshades', avatar: 'https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/WhatsApp%20Image%202025-07-03%20at%2017.44.45_bfe486bb.jpg' },
     { name: 'Joshua Ogbeifun', avatar: 'https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/photo_2025-08-30_01-40-01.jpg' },
-    { name: 'Sarah', avatar: 'https://picsum.photos/seed/sarah/200' },
-    { name: 'Mike', avatar: 'https://picsum.photos/seed/mike/200' },
-    { name: 'Emily', avatar: 'https://picsum.photos/seed/emily/200' },
-    { name: 'Chris', avatar: 'https://picsum.photos/seed/chris/200' },
-    { name: 'Jessica', avatar: 'https://picsum.photos/seed/jessica/200' },
-    { name: 'David', avatar: 'https://picsum.photos/seed/david/200' },
-    { name: 'Linda', avatar: 'https://picsum.photos/seed/linda/200' },
-    { name: 'Alex', avatar: 'https://picsum.photos/seed/alex/200' },
-    { name: 'Jordan', avatar: 'https://picsum.photos/seed/jordan/200' },
-    { name: 'Taylor', avatar: 'https://picsum.photos/seed/taylor/200' },
-    { name: 'Casey', avatar: 'https://picsum.photos/seed/casey/200' },
   ];
 
   return (
