@@ -11,7 +11,7 @@ import Image from 'next/image';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { sendBirthdayMessage } from '@/app/actions';
-import { PlayCircle, Volume2, VolumeX } from 'lucide-react';
+import { PlayCircle } from 'lucide-react';
 import Autoplay from "embla-carousel-autoplay"
 import {
   Carousel,
@@ -25,8 +25,6 @@ import {
 const QuasimodoScene = dynamic(() => import('@/components/page/QuasimodoScene'), { ssr: false });
 const TributeVideoPlayer = dynamic(() => import('@/components/page/TributeVideoPlayer'), { ssR: false });
 const FireworksEffect = dynamic(() => import('@/components/page/FireworksEffect'), { ssR: false });
-const NowPlayingNotification = dynamic(() => import('@/components/page/NowPlayingNotification'), { ssR: false });
-const SongDetailView = dynamic(() => import('@/components/page/SongDetailView'), { ssR: false });
 const ThissdaxLogo = dynamic(() => import('@/components/page/ThissdaxLogo').then(m => m.ThissdaxLogo), { ssr: false });
 
 
@@ -190,8 +188,25 @@ function QuasimodoCard(){
 }
 
 // Video tribute section
-function VideoTribute() {
+function VideoTribute({ audioRef }) {
   const [isPlaying, setIsPlaying] = useState(false);
+
+  const handlePlay = () => {
+    setIsPlaying(true);
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch(error => {
+        console.error("Audio play failed:", error);
+      });
+    }
+  };
+
+  const handleClose = () => {
+    setIsPlaying(false);
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+  };
 
   return (
     <section id="tribute-video" className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 overflow-hidden">
@@ -205,7 +220,7 @@ function VideoTribute() {
         <AnimatedText delay={0.4}>
         <div className="flex justify-center">
           <Button
-            onClick={() => setIsPlaying(true)}
+            onClick={handlePlay}
             variant="outline"
             className="rounded-full pl-5 pr-6 py-3 font-medium text-lg border-purple-400/30 hover:border-purple-400/80 hover:text-white"
           >
@@ -214,7 +229,9 @@ function VideoTribute() {
           </Button>
         </div>
         </AnimatedText>
-        {isPlaying && <TributeVideoPlayer onClose={() => setIsPlaying(false)} />}
+        <AnimatePresence>
+          {isPlaying && <TributeVideoPlayer onClose={handleClose} />}
+        </AnimatePresence>
       </div>
     </section>
   );
@@ -311,92 +328,15 @@ function Contact(){
   );
 }
 
-function AudioPlayer({ onReady, showMuteButton }) {
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const [isMuted, setIsMuted] = useState(true);
-  const onReadyCalled = useRef(false);
-
-  const toggleMute = () => {
-    if (audioRef.current) {
-      const currentlyMuted = audioRef.current.muted;
-      audioRef.current.muted = !currentlyMuted;
-      setIsMuted(!currentlyMuted);
-    }
-  };
-  
-  useEffect(() => {
-    const playAudio = async () => {
-      if (audioRef.current && !onReadyCalled.current) {
-        try {
-          audioRef.current.muted = false;
-          await audioRef.current.play();
-          setIsMuted(false);
-          if (!onReadyCalled.current) {
-            onReady();
-            onReadyCalled.current = true;
-          }
-        } catch (error) {
-          console.log("Autoplay with sound was prevented by the browser. Starting muted.", error);
-          audioRef.current.muted = true;
-           try {
-            await audioRef.current.play();
-            setIsMuted(true);
-            if (!onReadyCalled.current) {
-              onReady();
-              onReadyCalled.current = true;
-            }
-          } catch(e) {
-            console.log("Autoplay is completely blocked.", e);
-          }
-        }
-      }
-    };
-    const timeoutId = setTimeout(playAudio, 100);
-    return () => clearTimeout(timeoutId);
-  }, [onReady]);
-
-  return (
-    <div>
-       <audio ref={audioRef} loop playsInline>
-          <source src="https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/New%20Divide%20(Official%20Music%20Video)%20%5B4K%20Upgrade%5D%20-%20Linkin%20Park.mp3" type="audio/mpeg" />
-          Your browser does not support the audio element.
-        </audio>
-        {showMuteButton && <button 
-          onClick={toggleMute} 
-          className="fixed bottom-4 left-4 z-50 p-2 rounded-full bg-black/50 text-white backdrop-blur-sm"
-          aria-label={isMuted ? "Unmute" : "Mute"}
-        >
-          {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-        </button>}
-    </div>
-  )
-}
-
-
 // Main App
 export default function ThissdaxBirthdayApp() {
   const [year, setYear] = useState(new Date().getFullYear());
-  const [showMusicNotif, setShowMusicNotif] = useState(false);
-  const [showSongDetail, setShowSongDetail] = useState(false);
-  const [showMuteButton, setShowMuteButton] = useState(false);
-  const notificationShown = useRef(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
 
   useEffect(() => {
     setYear(new Date().getFullYear());
   }, []);
-
-  const handleAudioReady = () => {
-    if (!notificationShown.current) {
-      setShowMusicNotif(true);
-      notificationShown.current = true;
-    }
-  };
-
-  const handleNotificationComplete = () => {
-    setShowMusicNotif(false);
-    setShowMuteButton(true);
-  };
   
   const tweetText = "Celebrating my mentor @thissdax's birthday with this awesome 3D tribute! Join in! #Forex #ThissdaxBirthday";
   const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
@@ -424,22 +364,12 @@ export default function ThissdaxBirthdayApp() {
 
   return (
     <div className="min-h-screen">
-      <AnimatePresence>
-        {showMusicNotif && <NowPlayingNotification 
-          songTitle="New Divide" 
-          artist="Linkin Park" 
-          albumArtUrl="https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/images.png?raw=true"
-          onClick={() => setShowSongDetail(true)}
-          onComplete={handleNotificationComplete}
-           />}
-      </AnimatePresence>
-
-      {showSongDetail && (
-        <SongDetailView onClose={() => setShowSongDetail(false)} />
-      )}
-
+      <audio ref={audioRef} loop playsInline>
+        <source src="https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/New%20Divide%20(Official%20Music%20Video)%20%5B4K%20Upgrade%5D%20-%20Linkin%20Park.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+      
       <FireworksEffect />
-      <AudioPlayer onReady={handleAudioReady} showMuteButton={showMuteButton}/>
 
       <header className="sticky top-0 z-40 backdrop-blur bg-black/20 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px:6 lg:px-8 h-16 flex items-center justify-between">
@@ -459,7 +389,7 @@ export default function ThissdaxBirthdayApp() {
       <main>
         <Hero />
         <QuasimodoCard />
-        <VideoTribute />
+        <VideoTribute audioRef={audioRef} />
         <MenteeWall />
         <Contact />
       </main>
