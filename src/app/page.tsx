@@ -282,7 +282,7 @@ export default function ThissdaxBirthdayApp() {
   return (
     <div className="min-h-screen">
       <audio ref={audioRef} loop playsInline>
-        <source src="https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/New%20Divide%20(Official%20Music%20Video)%20%5B4K%20Upgrade%5D%20-%20Linkin%20Park.mp3" type="audio/mpeg" />
+        <source src="/new-divide.mp3" type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
       
