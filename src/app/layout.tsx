@@ -6,7 +6,12 @@ export const metadata: Metadata = {
   title: 'Happy Birthday Thissdax!',
   description: 'A 3D birthday celebration for the Forex Mentor.',
   icons: {
-    icon: '/dax.jpg',
+    icon: [
+      {
+        url: '/dax.jpg',
+        href: '/dax.jpg',
+      },
+    ],
   },
 };
 
