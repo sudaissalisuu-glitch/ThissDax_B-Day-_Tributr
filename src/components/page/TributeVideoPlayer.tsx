@@ -75,7 +75,7 @@ const AnimatedText = ({ children, delay, duration = 4, className = '', ...props 
       ease: 'easeInOut',
       times: [0, 0.2, 0.8, 1],
     }}
-    className={className}
+    className={`absolute ${className}`}
     {...props}
   >
     {children}
@@ -193,7 +193,7 @@ const TributeVideoPlayer = ({ onClose, audioRef }) => {
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: finalMessageDelay / 1000, duration: 0.5, ease: 'easeOut' }}
-                className="text-4xl md:text-6xl font-black text-white mt-8"
+                className="text-4xl md:text-6xl font-black text-white"
              >
                 Happy Birthday, Thissdax! 🎂
              </motion.div>
