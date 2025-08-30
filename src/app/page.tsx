@@ -26,6 +26,25 @@ const QuasimodoScene = dynamic(() => import('@/components/page/QuasimodoScene'),
 const TributeVideoPlayer = dynamic(() => import('@/components/page/TributeVideoPlayer'), { ssR: false });
 const FireworksEffect = dynamic(() => import('@/components/page/FireworksEffect'), { ssR: false });
 const NowPlayingNotification = dynamic(() => import('@/components/page/NowPlayingNotification'), { ssR: false });
+const SongDetailView = dynamic(() => import('@/components/page/SongDetailView'), { ssR: false });
+
+
+const AnimatedText = ({ children, className, delay = 0.2 }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 20 }}
+      transition={{ duration: 0.5, delay }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
 
 // Contact Form Component
@@ -156,11 +175,13 @@ function QuasimodoCard(){
               <CarouselNext className="right-2" />
           </Carousel>
         <div className="space-y-4">
-          <h2 className="text-3xl sm:text-4xl font-bold">Quasimodo Pattern • Charts</h2>
-          <p className="text-white/70">A showcase of the precision and style that defines the QM strategy. These charts reflect the focus and dedication to the craft.</p>
-          <div className="flex gap-3">
-            <a href="#message" className="rounded-2xl px-5 py-3 font-medium bg-purple-600/80 hover:bg-purple-500/90">Say Happy Birthday</a>
-          </div>
+          <AnimatedText><h2 className="text-3xl sm:text-4xl font-bold">Quasimodo Pattern • Charts</h2></AnimatedText>
+          <AnimatedText delay={0.3}><p className="text-white/70">A showcase of the precision and style that defines the QM strategy. These charts reflect the focus and dedication to the craft.</p></AnimatedText>
+          <AnimatedText delay={0.4}>
+            <div className="flex gap-3">
+              <a href="#message" className="rounded-2xl px-5 py-3 font-medium bg-purple-600/80 hover:bg-purple-500/90">Say Happy Birthday</a>
+            </div>
+          </AnimatedText>
         </div>
       </div>
     </section>
@@ -174,10 +195,13 @@ function VideoTribute() {
   return (
     <section id="tribute-video" className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 overflow-hidden">
       <div className="text-center space-y-4">
-        <h2 className="text-3xl sm:text-4xl font-bold">A Special Message</h2>
-        <p className="text-white/70 max-w-2xl mx-auto">
-          A short video tribute for the mentor.
-        </p>
+        <AnimatedText><h2 className="text-3xl sm:text-4xl font-bold">A Special Message</h2></AnimatedText>
+        <AnimatedText delay={0.3}>
+          <p className="text-white/70 max-w-2xl mx-auto">
+            A short video tribute for the mentor.
+          </p>
+        </AnimatedText>
+        <AnimatedText delay={0.4}>
         <div className="flex justify-center">
           <Button
             onClick={() => setIsPlaying(true)}
@@ -188,6 +212,7 @@ function VideoTribute() {
             Watch Video
           </Button>
         </div>
+        </AnimatedText>
         {isPlaying && <TributeVideoPlayer onClose={() => setIsPlaying(false)} />}
       </div>
     </section>
@@ -218,10 +243,12 @@ function MenteeWall() {
   return (
     <section id="mentees" className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 overflow-hidden">
       <div className="text-center space-y-8">
-        <h2 className="text-3xl sm:text-4xl font-bold">A Wall of Mentees</h2>
-        <p className="text-white/70 max-w-2xl mx-auto">
-          A tribute from the community you've built. We appreciate you!
-        </p>
+        <AnimatedText><h2 className="text-3xl sm:text-4xl font-bold">A Wall of Mentees</h2></AnimatedText>
+        <AnimatedText delay={0.3}>
+          <p className="text-white/70 max-w-2xl mx-auto">
+            A tribute from the community you've built. We appreciate you!
+          </p>
+        </AnimatedText>
         <Carousel 
           plugins={[plugin.current]}
           className="w-full max-w-4xl mx-auto"
@@ -256,7 +283,7 @@ function MenteeWall() {
             ))}
           </CarouselContent>
         </Carousel>
-        <p className="text-sm text-white/50">Want to be on the wall? Reach out to the developer.</p>
+        <AnimatedText delay={0.4}><p className="text-sm text-white/50">Want to be on the wall? Reach out to the developer.</p></AnimatedText>
       </div>
     </section>
   );
@@ -269,8 +296,8 @@ function Contact(){
     <section id="message" className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 overflow-hidden">
       <div className="max-w-xl mx-auto text-center">
         <div className="space-y-3">
-          <h2 className="text-3xl sm:text-4xl font-bold">Send a Birthday Message</h2>
-          <p className="text-white/70">Your email goes straight to Thissdax. This is a demo; email sending is not live.</p>
+          <AnimatedText><h2 className="text-3xl sm:text-4xl font-bold">Send a Birthday Message</h2></AnimatedText>
+          <AnimatedText delay={0.3}><p className="text-white/70">Your email goes straight to Thissdax. This is a demo; email sending is not live.</p></AnimatedText>
           <ContactForm />
         </div>
       </div>
@@ -337,6 +364,7 @@ function AudioPlayer({ onReady }) {
 export default function ThissdaxBirthdayApp() {
   const [year, setYear] = useState(new Date().getFullYear());
   const [showMusicNotif, setShowMusicNotif] = useState(false);
+  const [showSongDetail, setShowSongDetail] = useState(false);
 
   useEffect(() => {
     setYear(new Date().getFullYear());
@@ -369,8 +397,19 @@ export default function ThissdaxBirthdayApp() {
   return (
     <div className="min-h-screen">
       <AnimatePresence>
-        {showMusicNotif && <NowPlayingNotification songTitle="New Divide" artist="Linkin Park" albumArtUrl="https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/images.png" />}
+        {showMusicNotif && <NowPlayingNotification 
+          songTitle="New Divide" 
+          artist="Linkin Park" 
+          albumArtUrl="https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/images.png"
+          onClick={() => setShowSongDetail(true)}
+          onComplete={() => setShowMusicNotif(false)}
+           />}
       </AnimatePresence>
+
+      {showSongDetail && (
+        <SongDetailView onClose={() => setShowSongDetail(false)} />
+      )}
+
       <FireworksEffect />
       <AudioPlayer onReady={() => setShowMusicNotif(true)} />
       <header className="sticky top-0 z-40 backdrop-blur bg-black/20 border-b border-white/10">
@@ -397,7 +436,7 @@ export default function ThissdaxBirthdayApp() {
       </main>
 
       <footer className="py-10 border-t border-white/10 mt-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px:6 lg:px:8 text-sm text-white/60 flex flex-col sm:flex-row gap-4 items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px:6 lg:px-8 text-sm text-white/60 flex flex-col sm:flex-row gap-4 items-center justify-between">
           <p>Made with 💜 by Dreadshades • © {year}</p>
           <div className="flex items-center gap-4">
             <a href={tweetUrl} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
@@ -412,5 +451,3 @@ export default function ThissdaxBirthdayApp() {
     </div>
   );
 }
-
-    

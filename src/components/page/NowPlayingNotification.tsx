@@ -6,16 +6,20 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { Music2 } from 'lucide-react';
 
-export default function NowPlayingNotification({ songTitle, artist, albumArtUrl }) {
+export default function NowPlayingNotification({ songTitle, artist, albumArtUrl, onClick, onComplete }) {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(false);
+      if (onComplete) {
+        // Delay completion to allow exit animation
+        setTimeout(onComplete, 1000); 
+      }
     }, 5000); // Disappear after 5 seconds
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [onComplete]);
 
   return (
     <AnimatePresence>
@@ -23,15 +27,17 @@ export default function NowPlayingNotification({ songTitle, artist, albumArtUrl 
         <motion.div
           initial={{ y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -100, opacity: 0 }}
+          exit={{ y: -100, opacity: 0, transition: { duration: 0.5, ease: "easeIn" } }}
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
           className="fixed top-4 left-1/2 -translate-x-1/2 z-50"
+          onClick={onClick}
+          style={{ cursor: 'pointer' }}
         >
           <motion.div
             className="flex items-center gap-3 bg-black/80 backdrop-blur-md text-white rounded-full overflow-hidden shadow-2xl ring-1 ring-purple-500/50"
             initial={{ width: 48, height: 48 }}
-            animate={{ width: 'auto', height: 48, transition: { delay: 0.2, duration: 0.5 } }}
-            exit={{ width: 48, height: 48, transition: { duration: 0.5 } }}
+            animate={{ width: 'auto', height: 48, transition: { delay: 0.2, duration: 0.5, ease: "easeOut" } }}
+            exit={{ width: 48, height: 48, transition: { duration: 0.5, ease: "easeIn" } }}
           >
             <motion.div
               initial={{ opacity: 0 }}
@@ -62,5 +68,3 @@ export default function NowPlayingNotification({ songTitle, artist, albumArtUrl 
     </AnimatePresence>
   );
 }
-
-    
