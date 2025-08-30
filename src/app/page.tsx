@@ -223,7 +223,7 @@ function VideoTribute() {
 // Mentee Wall Component
 function MenteeWall() {
   const mentees = [
-    { name: 'Dreadshades', avatar: 'https://picsum.photos/seed/dread/200' },
+    { name: 'Sudais Salisu', aka: 'Aka Dreadshades', avatar: 'https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/WhatsApp%20Image%202025-07-03%20at%2017.44.45_bfe486bb.jpg' },
     { name: 'Sarah', avatar: 'https://picsum.photos/seed/sarah/200' },
     { name: 'Mike', avatar: 'https://picsum.photos/seed/mike/200' },
     { name: 'Emily', avatar: 'https://picsum.photos/seed/emily/200' },
@@ -279,7 +279,10 @@ function MenteeWall() {
                     className="rounded-full ring-2 ring-purple-500/50 object-cover aspect-square"
                     data-ai-hint="person portrait"
                   />
-                  <span className="font-medium text-white/90 text-center">{mentee.name}</span>
+                  <div className="text-center">
+                    <span className="font-medium text-white/90">{mentee.name}</span>
+                    {mentee.aka && <span className="block text-xs text-purple-300/80">{mentee.aka}</span>}
+                  </div>
                 </motion.div>
               </CarouselItem>
             ))}
@@ -476,6 +479,8 @@ export default function ThissdaxBirthdayApp() {
     </div>
   );
 }
+
+    
 
     
 
