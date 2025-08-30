@@ -193,6 +193,7 @@ function MenteeWall() {
     { name: 'Sudais Salisu', aka: 'Aka Dreadshades', avatar: 'https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/WhatsApp%20Image%202025-07-03%20at%2017.44.45_bfe486bb.jpg' },
     { name: 'Joshua Ogbeifun', avatar: 'https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/photo_2025-08-30_01-40-01.jpg' },
     { name: 'Ololade Mayowa', avatar: 'https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/photo_2025-08-30_07-47-48.jpg' },
+    { name: 'New Mentee', avatar: 'https://picsum.photos/120/120' },
   ];
 
   return (
@@ -313,7 +314,7 @@ export default function ThissdaxBirthdayApp() {
       </main>
 
       <footer className="py-10 border-t border-white/10 mt-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px:6 lg:px-8 text-sm text-white/60 flex flex-col sm:flex-row gap-4 items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-sm text-white/60 flex flex-col sm:flex-row gap-4 items-center justify-between">
           <p>Made with 💜 by Dreadshades • © {year}</p>
           <div className="flex items-center gap-4">
             <a href={tweetUrl} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
@@ -328,3 +329,5 @@ export default function ThissdaxBirthdayApp() {
     </div>
   );
 }
+
+    
