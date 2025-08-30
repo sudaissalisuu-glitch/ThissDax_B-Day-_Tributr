@@ -23,8 +23,8 @@ import {
 
 
 const QuasimodoScene = dynamic(() => import('@/components/page/QuasimodoScene'), { ssr: false });
-const TributeVideoPlayer = dynamic(() => import('@/components/page/TributeVideoPlayer'), { ssR: false });
-const FireworksEffect = dynamic(() => import('@/components/page/FireworksEffect'), { ssR: false });
+const TributeVideoPlayer = dynamic(() => import('@/components/page/TributeVideoPlayer'), { ssr: false });
+const FireworksEffect = dynamic(() => import('@/components/page/FireworksEffect'), { ssr: false });
 const ThissdaxLogo = dynamic(() => import('@/components/page/ThissdaxLogo').then(m => m.ThissdaxLogo), { ssr: false });
 
 
@@ -230,7 +230,7 @@ function VideoTribute({ audioRef }) {
         </div>
         </AnimatedText>
         <AnimatePresence>
-          {isPlaying && <TributeVideoPlayer onClose={handleClose} />}
+          {isPlaying && <TributeVideoPlayer onClose={handleClose} audioRef={audioRef} />}
         </AnimatePresence>
       </div>
     </section>

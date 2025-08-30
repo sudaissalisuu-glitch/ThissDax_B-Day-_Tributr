@@ -4,6 +4,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
+import dynamic from 'next/dynamic';
+
+const NowPlayingCard = dynamic(() => import('./NowPlayingCard'), { ssr: false });
 
 const forexPairs = [
   'EUR/USD', 'GBP/JPY', 'AUD/USD', 'USD/CAD', 'NZD/USD', 'XAU/USD',
@@ -110,8 +113,18 @@ const FireworksPiece = ({ i, delay }) => {
   );
 };
 
-const TributeVideoPlayer = ({ onClose }) => {
-    const finalMessageDelay = 22000;
+const TributeVideoPlayer = ({ onClose, audioRef }) => {
+  const finalMessageDelay = 22000;
+  const [showNowPlaying, setShowNowPlaying] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowNowPlaying(true);
+    }, finalMessageDelay);
+
+    return () => clearTimeout(timer);
+  }, []);
+
 
   return (
     <motion.div
@@ -128,6 +141,10 @@ const TributeVideoPlayer = ({ onClose }) => {
         >
           <X size={32} />
         </button>
+
+        <AnimatePresence>
+            {showNowPlaying && <NowPlayingCard audioRef={audioRef} />}
+        </AnimatePresence>
 
         {/* Scene 1: Forex Pairs & Trading Terms */}
         <div className="absolute inset-0 overflow-hidden">
