@@ -36,11 +36,11 @@ const NowPlayingCard = ({ audioRef }) => {
 
   return (
     <motion.div
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      exit={{ y: -100, opacity: 0 }}
+      initial={{ x: -100, y: 100, opacity: 0 }}
+      animate={{ x: 0, y: 0, opacity: 1 }}
+      exit={{ x: -100, y: 100, opacity: 0 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      className="fixed top-4 left-1/2 -translate-x-1/2 w-[300px] bg-black/40 backdrop-blur-lg border border-white/10 rounded-2xl p-4 flex items-center gap-4 z-50 shadow-2xl"
+      className="fixed bottom-4 left-4 w-[300px] bg-black/40 backdrop-blur-lg border border-white/10 rounded-2xl p-4 flex items-center gap-4 z-50 shadow-2xl"
     >
       <div className="p-3 rounded-full bg-purple-500/20">
         <Music className="w-6 h-6 text-purple-300" />
