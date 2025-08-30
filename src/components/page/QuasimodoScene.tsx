@@ -1,7 +1,7 @@
 
 'use client';
 
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import {
   OrbitControls,
@@ -19,7 +19,17 @@ function Model(props) {
   return <primitive object={scene} {...props} />;
 }
 
-export default function QuasimodoScene() {
+export default function QuasimodoScene({ onReady }) {
+
+  useEffect(() => {
+    // We can consider the scene "ready" once the component mounts,
+    // as Suspense will handle the loading state.
+    if(onReady) {
+      onReady();
+    }
+  }, [onReady]);
+
+
   return (
     <Canvas dpr={[1, 2]} camera={{ position: [0, 1, 5], fov: 50 }}>
       <color attach="background" args={['#130322']} />
