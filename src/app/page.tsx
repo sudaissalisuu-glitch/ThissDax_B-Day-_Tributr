@@ -25,6 +25,7 @@ const QuasimodoScene = dynamic(() => import('@/components/page/QuasimodoScene'),
 const TributeVideoPlayer = dynamic(() => import('@/components/page/TributeVideoPlayer'), { ssr: false });
 const FireworksEffect = dynamic(() => import('@/components/page/FireworksEffect'), { ssr: false });
 const ThissdaxLogo = dynamic(() => import('@/components/page/ThissdaxLogo').then(m => m.ThissdaxLogo), { ssr: false });
+const TradersToolkit = dynamic(() => import('@/components/page/TradersToolkit'), { ssr: false });
 
 const AnimatedText = ({ children, className, delay = 0.2 }) => {
   const ref = useRef(null);
@@ -292,6 +293,7 @@ export default function ThissdaxBirthdayApp() {
             <a href="#qm" className="hover:text-white">Charts</a>
             <a href="#tribute-video" className="hover:text-white">Tribute</a>
             <a href="#mentees" className="hover:text-white">Mentees</a>
+            <a href="#toolkit" className="hover:text-white">Toolkit</a>
           </nav>
           <a href={tweetUrl} target="_blank" rel="noopener noreferrer" className="md:hidden rounded-xl px-3 py-2 bg-purple-600/80">Share</a>
         </div>
@@ -302,6 +304,7 @@ export default function ThissdaxBirthdayApp() {
         <QuasimodoCard />
         <VideoTribute audioRef={audioRef} />
         <MenteeWall />
+        <TradersToolkit />
       </main>
 
       <footer className="py-10 border-t border-white/10 mt-10">
