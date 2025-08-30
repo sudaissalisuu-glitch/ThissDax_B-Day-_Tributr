@@ -58,7 +58,7 @@ function useShimmer(ref){
 }
 
 // Hero Section
-function Hero({ onSceneReady }){
+function Hero(){
   const shimmerRef = useRef(null);
   useShimmer(shimmerRef);
 
@@ -80,7 +80,7 @@ function Hero({ onSceneReady }){
             <div className="relative animated-glowing-ring">
               <div id="scene" className="h-[420px] w-[420px] rounded-full overflow-hidden">
                 <Suspense fallback={<div className="w-full h-full bg-black/20 animate-pulse rounded-full" />}>
-                    <QuasimodoScene onReady={onSceneReady} />
+                    <QuasimodoScene />
                 </Suspense>
               </div>
             </div>
@@ -247,24 +247,10 @@ function MenteeWall() {
   );
 }
 
-// Loading screen component
-const LoadingScreen = () => (
-  <motion.div
-    initial={{ opacity: 1 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0, transition: { duration: 0.5 } }}
-    className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#120228]"
-  >
-    <div className="w-16 h-16 border-4 border-purple-400 border-t-transparent rounded-full animate-spin"></div>
-    <p className="mt-4 text-white/80">Loading Scene...</p>
-  </motion.div>
-);
-
 // Main App
 export default function ThissdaxBirthdayApp() {
   const [year, setYear] = useState(new Date().getFullYear());
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [isSceneReady, setIsSceneReady] = useState(false);
 
   useEffect(() => {
     setYear(new Date().getFullYear());
@@ -296,10 +282,6 @@ export default function ThissdaxBirthdayApp() {
 
   return (
     <div className="min-h-screen">
-       <AnimatePresence>
-        {!isSceneReady && <LoadingScreen />}
-      </AnimatePresence>
-
       <audio ref={audioRef} loop playsInline>
         <source src="https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/New%20Divide%20(Official%20Music%20Video)%20%5B4K%20Upgrade%5D%20-%20Linkin%20Park.mp3" type="audio/mpeg" />
         Your browser does not support the audio element.
@@ -307,7 +289,7 @@ export default function ThissdaxBirthdayApp() {
       
       <FireworksEffect />
 
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: isSceneReady ? 1 : 0 }} transition={{ duration: 0.5 }}>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
         <header className="sticky top-0 z-40 backdrop-blur bg-black/20 border-b border-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px:6 lg:px-8 h-16 flex items-center justify-between">
             <a href="#home" className="flex items-center gap-2 font-black tracking-wide text-xl">
@@ -324,7 +306,7 @@ export default function ThissdaxBirthdayApp() {
         </header>
 
         <main>
-          <Hero onSceneReady={() => setIsSceneReady(true)} />
+          <Hero />
           <QuasimodoCard />
           <VideoTribute audioRef={audioRef} />
           <MenteeWall />

@@ -19,16 +19,7 @@ function Model(props) {
   return <primitive object={scene} {...props} />;
 }
 
-export default function QuasimodoScene({ onReady }) {
-
-  useEffect(() => {
-    // We can consider the scene "ready" once the component mounts,
-    // as Suspense will handle the loading state.
-    if(onReady) {
-      onReady();
-    }
-  }, [onReady]);
-
+export default function QuasimodoScene() {
 
   return (
     <Canvas dpr={[1, 2]} camera={{ position: [0, 1, 5], fov: 50 }}>
