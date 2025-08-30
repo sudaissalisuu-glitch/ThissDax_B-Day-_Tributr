@@ -10,7 +10,6 @@ import Image from 'next/image';
 
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
-import { sendBirthdayMessage } from '@/app/actions';
 import { PlayCircle } from 'lucide-react';
 import Autoplay from "embla-carousel-autoplay"
 import {
@@ -26,7 +25,6 @@ const QuasimodoScene = dynamic(() => import('@/components/page/QuasimodoScene'),
 const TributeVideoPlayer = dynamic(() => import('@/components/page/TributeVideoPlayer'), { ssr: false });
 const FireworksEffect = dynamic(() => import('@/components/page/FireworksEffect'), { ssr: false });
 const ThissdaxLogo = dynamic(() => import('@/components/page/ThissdaxLogo').then(m => m.ThissdaxLogo), { ssr: false });
-
 
 const AnimatedText = ({ children, className, delay = 0.2 }) => {
   const ref = useRef(null);
@@ -45,59 +43,6 @@ const AnimatedText = ({ children, className, delay = 0.2 }) => {
   );
 };
 
-
-// Contact Form Component
-function ContactForm() {
-  const { toast } = useToast();
-  const formRef = useRef<HTMLFormElement>(null);
-  const [isPending, setIsPending] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setIsPending(true);
-
-    const formData = new FormData(event.currentTarget);
-    const result = await sendBirthdayMessage({
-      message: '',
-      success: false,
-    }, formData);
-
-    setIsPending(false);
-
-    if (result.success) {
-      setIsSuccess(true);
-      toast({
-        title: "Message Sent!",
-        description: "Your birthday message has been sent to Thissdax.",
-      });
-      formRef.current?.reset();
-      setTimeout(() => setIsSuccess(false), 4000);
-    } else {
-      const errorMessages = typeof result.errors === 'string' ? result.errors : result.errors ? Object.values(result.errors).flat().join(', ') : 'An unexpected error occurred.';
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: errorMessages,
-      });
-    }
-  };
-
-
-  return (
-    <form ref={formRef} onSubmit={handleSubmit} className="grid gap-4">
-      <div className="grid sm:grid-cols-2 gap-4">
-        <input name="from_name" required placeholder="Your name" className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 outline-none focus:border-purple-400" />
-        <input name="reply_to" type="email" required placeholder="Your email" className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 outline-none focus:border-purple-400" />
-      </div>
-      <textarea name="message" rows={5} required placeholder="Write a birthday note for Thissdax…" className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 outline-none focus:border-purple-400" />
-      <Button type="submit" disabled={isPending} className="rounded-2xl px-5 py-3 font-medium bg-gradient-to-r from-purple-600 to-fuchsia-500 hover:from-purple-500 hover:to-fuchsia-400 disabled:opacity-60">
-        {isPending ? "Sending…" : isSuccess ? "Sent ✓" : "Send Message"}
-      </Button>
-      {isSuccess && <p className="text-green-400 text-sm text-center">Thanks for the support! ✨</p>}
-    </form>
-  );
-}
 
 // GSAP accent: shimmer on the main heading
 function useShimmer(ref){
@@ -127,7 +72,7 @@ function Hero(){
           <p className="text-white/70 max-w-prose">Dedicated to <span className="text-purple-300 font-semibold">Thissdax</span> — FX mentor, purple vibes ambassador, and Quasimodo strategy wizard. Enjoy this little 3D tribute. 🎂</p>
           <div className="flex gap-3 flex-wrap">
             <a href="#scene" className="rounded-2xl px-5 py-3 font-medium bg-purple-600/80 hover:bg-purple-500/90">Explore 3D</a>
-            <a href="#message" className="rounded-2xl px-5 py-3 font-medium border border-white/10 hover:border-purple-400">Leave a note</a>
+            <a href="#tribute-video" className="rounded-2xl px-5 py-3 font-medium border border-white/10 hover:border-purple-400">Watch Tribute</a>
           </div>
         </div>
         <div id="scene" className="h-[420px]">
@@ -178,7 +123,7 @@ function QuasimodoCard(){
           <AnimatedText delay={0.3}><p className="text-white/70">A showcase of the precision and style that defines the QM strategy. These charts reflect the focus and dedication to the craft.</p></AnimatedText>
           <AnimatedText delay={0.4}>
             <div className="flex gap-3">
-              <a href="#message" className="rounded-2xl px-5 py-3 font-medium bg-purple-600/80 hover:bg-purple-500/90">Say Happy Birthday</a>
+              <a href="#tribute-video" className="rounded-2xl px-5 py-3 font-medium bg-purple-600/80 hover:bg-purple-500/90">Watch Tribute</a>
             </div>
           </AnimatedText>
         </div>
@@ -295,22 +240,6 @@ function MenteeWall() {
   );
 }
 
-
-// Contact section
-function Contact(){
-  return (
-    <section id="message" className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 overflow-hidden">
-      <div className="max-w-xl mx-auto text-center">
-        <div className="space-y-3">
-          <AnimatedText><h2 className="text-3xl sm:text-4xl font-bold">Send a Birthday Message</h2></AnimatedText>
-          <AnimatedText delay={0.3}><p className="text-white/70">Your email goes straight to Thissdax. This is a demo; email sending is not live.</p></AnimatedText>
-          <ContactForm />
-        </div>
-      </div>
-    </section>
-  );
-}
-
 // Main App
 export default function ThissdaxBirthdayApp() {
   const [year, setYear] = useState(new Date().getFullYear());
@@ -363,9 +292,8 @@ export default function ThissdaxBirthdayApp() {
             <a href="#qm" className="hover:text-white">Charts</a>
             <a href="#tribute-video" className="hover:text-white">Tribute</a>
             <a href="#mentees" className="hover:text-white">Mentees</a>
-            <a href="#message" className="hover:text-white">Message</a>
           </nav>
-          <a href="#message" className="md:hidden rounded-xl px-3 py-2 bg-purple-600/80">Message</a>
+          <a href={tweetUrl} target="_blank" rel="noopener noreferrer" className="md:hidden rounded-xl px-3 py-2 bg-purple-600/80">Share</a>
         </div>
       </header>
 
@@ -374,7 +302,6 @@ export default function ThissdaxBirthdayApp() {
         <QuasimodoCard />
         <VideoTribute audioRef={audioRef} />
         <MenteeWall />
-        <Contact />
       </main>
 
       <footer className="py-10 border-t border-white/10 mt-10">
