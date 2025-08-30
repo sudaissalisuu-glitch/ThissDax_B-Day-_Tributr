@@ -78,8 +78,6 @@
     @apply border-border;
   }
   body {
-    @apply bg-gradient-to-br from-[#120228] via-[#2A0557] to-[#0b0217] text-white selection:bg-purple-500/30;
-    background-size: 200% 200%;
-    animation: gradient-move 15s ease infinite;
+    @apply bg-[#0d021c] text-white selection:bg-purple-500/30;
   }
 }
