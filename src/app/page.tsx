@@ -66,13 +66,13 @@ function Hero(){
     <section id="home" className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 overflow-hidden">
       <div className="grid lg:grid-cols-2 items-center gap-10">
         <div className="space-y-6">
-          <div className="inline-block rounded-full border border-purple-500/30 px-3 py-1 text-xs tracking-widest uppercase text-purple-300">Birthday Drop • Monday</div>
+          <div className="inline-block rounded-full border border-purple-500/30 px-3 py-1 text-xs tracking-widest uppercase text-purple-300">A Birthday Celebration</div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight">
-            <span ref={shimmerRef} className="bg-[linear-gradient(110deg,hsl(var(--primary))_35%,rgba(255,255,255,1)_50%,hsl(var(--primary))_65%)] bg-clip-text text-transparent bg-[length:200%_100%]">When focus hits, markets listen.</span>
+            <span ref={shimmerRef} className="bg-[linear-gradient(110deg,hsl(var(--primary))_35%,rgba(255,255,255,1)_50%,hsl(var(--primary))_65%)] bg-clip-text text-transparent bg-[length:200%_100%]">Happy Birthday, Thissdax!</span>
           </h1>
-          <p className="text-white/70 max-w-prose">Dedicated to <span className="text-purple-300 font-semibold">Thissdax</span> — FX mentor, purple vibes ambassador, and Quasimodo strategy wizard. Enjoy this little 3D tribute. 🎂</p>
+          <p className="text-white/70 max-w-prose">This one's for you, mentor! A small token of appreciation for your guidance in the markets and the community you've built. Enjoy the tribute. 🎂</p>
           <div className="flex gap-3 flex-wrap">
-            <a href="#scene" className="rounded-2xl px-5 py-3 font-medium bg-purple-600/80 hover:bg-purple-500/90">Explore 3D</a>
+            <a href="#scene" className="rounded-2xl px-5 py-3 font-medium bg-purple-600/80 hover:bg-purple-500/90">Join the Celebration</a>
             <a href="#tribute-video" className="rounded-2xl px-5 py-3 font-medium border border-white/10 hover:border-purple-400">Watch Tribute</a>
           </div>
         </div>
