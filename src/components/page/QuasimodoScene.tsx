@@ -38,17 +38,19 @@ export default function QuasimodoScene() {
         <Center>
           <Model scale={1.5} rotation={[0, -Math.PI / 4, 0]} />
         </Center>
-        <Text
-            position={[0, -1, 0]}
-            fontSize={0.2}
-            color="#a78bfa"
-            font="https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJfecg.woff"
-            anchorX="center"
-            anchorY="middle"
-            textAlign="center"
-            >
-            When you focus, the market listens.
-        </Text>
+        <Suspense fallback={null}>
+          <Text
+              position={[0, -1, 0]}
+              fontSize={0.2}
+              color="#a78bfa"
+              font="https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJfecg.woff"
+              anchorX="center"
+              anchorY="middle"
+              textAlign="center"
+              >
+              When you focus, the market listens.
+          </Text>
+        </Suspense>
         <Preload all />
       </Suspense>
 
