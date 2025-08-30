@@ -76,10 +76,13 @@ function Hero(){
             <a href="#tribute-video" className="rounded-2xl px-5 py-3 font-medium border border-white/10 hover:border-purple-400">Watch Tribute</a>
           </div>
         </div>
-        <div id="scene" className="h-[420px]">
-          <Suspense fallback={<div className="w-full h-full bg-black/20 animate-pulse rounded-2xl" />}>
-              <QuasimodoScene />
-          </Suspense>
+        <div className="flex flex-col items-center">
+            <div id="scene" className="h-[420px] w-full">
+              <Suspense fallback={<div className="w-full h-full bg-black/20 animate-pulse rounded-2xl" />}>
+                  <QuasimodoScene />
+              </Suspense>
+            </div>
+            <p className="mt-4 text-center text-sm italic text-purple-300/70">When you focus, the market listens.</p>
         </div>
       </div>
     </section>
