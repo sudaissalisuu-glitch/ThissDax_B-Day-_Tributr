@@ -14,7 +14,7 @@ import {
 
 function Model(props) {
   const { scene } = useGLTF(
-    'https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/textured.glb'
+    '/textured.glb'
   );
   return <primitive object={scene} {...props} />;
 }
@@ -67,5 +67,5 @@ export default function QuasimodoScene() {
 }
 
 useGLTF.preload(
-  'https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/textured.glb'
+  '/textured.glb'
 );
