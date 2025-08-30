@@ -2,7 +2,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Network, BarChart3, ListOrdered, GitMerge } from 'lucide-react';
+import { Network, BarChart3, ListOrdered, GitMerge, LineChart } from 'lucide-react';
 import React from 'react';
 
 const toolkitItems = [
@@ -22,9 +22,14 @@ const toolkitItems = [
     description: 'Reading the order book to see buy and sell pressure in real-time.',
   },
   {
+    icon: <LineChart className="w-8 h-8 text-purple-400" />,
+    title: 'Technical Analysis',
+    description: 'The foundation of market prediction, using charts and patterns to forecast price movements.',
+  },
+  {
     icon: <GitMerge className="w-8 h-8 text-purple-400" />,
-    title: 'TA VWAP',
-    description: 'Using the Volume Weighted Average Price as a key indicator.',
+    title: 'VWAP',
+    description: 'Using the Volume-Weighted Average Price as a dynamic benchmark for institutional interest.',
   },
 ];
 
@@ -54,11 +59,11 @@ const TradersToolkit = () => {
         </AnimatedText>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-center">
         {toolkitItems.map((item, index) => (
           <motion.div
             key={index}
-            className="bg-card/50 ring-1 ring-white/10 rounded-2xl p-6 flex flex-col items-start gap-4 transition-all duration-300 hover:ring-purple-400/50 hover:bg-card"
+            className="bg-card/50 ring-1 ring-white/10 rounded-2xl p-6 flex flex-col items-start gap-4 transition-all duration-300 hover:ring-purple-400/50 hover:bg-card max-w-sm"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.5 }}
