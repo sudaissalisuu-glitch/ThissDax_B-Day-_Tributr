@@ -193,7 +193,7 @@ function MenteeWall() {
     { name: 'Sudais Salisu', aka: 'AKA Dreadshades', avatar: 'https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/WhatsApp%20Image%202025-07-03%20at%2017.44.45_bfe486bb.jpg' },
     { name: 'Joshua Ogbeifun', avatar: 'https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/photo_2025-08-30_01-40-01.jpg' },
     { name: 'Ololade Mayowa', avatar: 'https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/photo_2025-08-30_07-47-48.jpg' },
-    { name: 'Doghor Oghenetega Divine', avatar: 'https://github.com/sudaissalisuu-glitch/nextjs-boilerplate/blob/main/photo_2025-08-31_20-22-27.jpg' },
+    { name: 'Doghor Oghenetega Divine', avatar: 'https://raw.githubusercontent.com/sudaissalisuu-glitch/nextjs-boilerplate/blob/main/photo_2025-08-31_20-22-27.jpg' },
   ];
 
   return (
