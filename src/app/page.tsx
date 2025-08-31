@@ -193,13 +193,14 @@ function MenteeWall() {
     { name: 'Sudais Salisu', aka: 'AKA Dreadshades', avatar: 'https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/WhatsApp%20Image%202025-07-03%20at%2017.44.45_bfe486bb.jpg' },
     { name: 'Joshua Ogbeifun', avatar: 'https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/photo_2025-08-30_01-40-01.jpg' },
     { name: 'Ololade Mayowa', avatar: 'https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/photo_2025-08-30_07-47-48.jpg' },
+    { name: 'Doghor Oghenetega Divine', avatar: 'https://github.com/sudaissalisuu-glitch/nextjs-boilerplate/blob/main/photo_2025-08-31_20-22-27.jpg' },
   ];
 
   return (
     <section id="mentees" className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 overflow-hidden">
       <div className="text-center space-y-8">
         <AnimatedText>
-          <h2 className="text-3xl sm:text-4xl font-bold">A Wall of Mentees</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold">Wall of Mentees</h2>
         </AnimatedText>
         <AnimatedText delay={0.3}>
           <p className="text-white/70 max-w-2xl mx-auto">
