@@ -194,6 +194,7 @@ function MenteeWall() {
     { name: 'Joshua Ogbeifun', avatar: 'https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/photo_2025-08-30_01-40-01.jpg' },
     { name: 'Ololade Mayowa', avatar: 'https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/photo_2025-08-30_07-47-48.jpg' },
     { name: 'Doghor Oghenetega Divine', avatar: 'https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/photo_2025-08-31_20-22-27.jpg' },
+    { name: 'Sa’ad Murtala', avatar: 'https://raw.githubusercontent.com/dreadshades-cpu/ssmmsm/main/photo_2025-09-01_21-38-16.jpg' },
   ];
 
   return (
